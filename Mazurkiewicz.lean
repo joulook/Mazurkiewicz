@@ -43,6 +43,10 @@ import Mazurkiewicz.Induction.CutBar
 import Mazurkiewicz.Induction.BarCheck
 import Mazurkiewicz.Induction.ToggleExample
 import Mazurkiewicz.Audit
+import Mazurkiewicz.Condpor.Chain
+import Mazurkiewicz.Condpor.GetNextEx
+import Mazurkiewicz.Condpor.StackEx
+import Mazurkiewicz.Condpor.Rf.Variant
 
 /-!
 # Mazurkiewicz

@@ -13,6 +13,10 @@ import Mazurkiewicz.Trust.A22
 import Mazurkiewicz.Trust.Oracle
 import Mazurkiewicz.Induction.AssertExample
 import Mazurkiewicz.Induction.ToggleExample
+import Mazurkiewicz.Condpor.Chain
+import Mazurkiewicz.Condpor.GetNextEx
+import Mazurkiewicz.Condpor.StackEx
+import Mazurkiewicz.Condpor.Rf.Variant
 
 /-!
 # Axiom audit
@@ -413,3 +417,104 @@ import Mazurkiewicz.Induction.ToggleExample
 #print axioms Trust.Toggle.toggle_safe
 #print axioms Trust.Toggle.toggle_reject_fuel
 #print axioms Trust.Toggle.toggle_reject
+
+/-! ### Condpor: the symbolic algorithm -/
+
+#print axioms Condpor.Model.sym_cons_addMax
+#print axioms Condpor.Reach.sound
+#print axioms Condpor.ComplStep.pol_added
+#print axioms Condpor.RvData.maxAdded
+#print axioms Condpor.complete
+#print axioms Condpor.Reach.prevStep_of_step
+#print axioms Condpor.path_unique
+#print axioms Condpor.Reach.eq_of_abs_eq
+#print axioms Condpor.Reach.reaches_full
+#print axioms Condpor.exists_full_extension
+#print axioms Condpor.reachX_of_reach
+#print axioms Condpor.exists_reachX_err
+#print axioms Condpor.complete_exit
+#print axioms Condpor.explore_spec
+#print axioms Condpor.Config.maxAddedB_iff
+#print axioms Condpor.exploreC_eq
+#print axioms Condpor.exploreC_spec
+#print axioms Condpor.eqSatB_iff
+#print axioms Condpor.fig1_six
+#print axioms Condpor.ex1_four
+#print axioms Condpor.ex1_revisit_B
+#print axioms Condpor.ex1_no_revisit_C
+#print axioms Condpor.sb_forbidden
+#print axioms Condpor.Model.sym_cons_addRead_iff
+#print axioms Condpor.Sem.sat_insert_of_models
+#print axioms Condpor.complete_byModel
+#print axioms Condpor.eqSolve_models
+#print axioms Condpor.fig1_count_byModel
+#print axioms Condpor.ex1_count_byModel
+#print axioms Condpor.mem_visitC
+#print axioms Condpor.exploreX_err
+#print axioms Condpor.exploreX_ok
+#print axioms Condpor.exploreX_finds
+#print axioms Condpor.ex1_revisit_only_B
+#print axioms Condpor.ex1_revisit_from_B
+#print axioms Condpor.fig1_graphs
+#print axioms Condpor.mem_orderings
+#print axioms Condpor.orderings_read_first
+#print axioms Condpor.behaviours_total
+#print axioms Condpor.fig1_perm
+#print axioms Condpor.exploreV_std
+#print axioms Condpor.printed_deleted_self
+#print axioms Condpor.n0_lost
+#print axioms Condpor.n1_duplicate
+#print axioms Condpor.n2_lost_init
+#print axioms Condpor.n2_lost_last
+#print axioms Condpor.n3_duplicate
+#print axioms Condpor.n3_lost
+#print axioms Condpor.revisit_chain
+#print axioms Condpor.fig1_exit
+#print axioms Condpor.se_ne_byModel
+#print axioms Condpor.Reach.prefix_pred
+#print axioms Condpor.Reach.path_of_prefix
+#print axioms Condpor.Reach.exists_seg
+#print axioms Condpor.Seg.unique
+#print axioms Condpor.Reach.segChain
+#print axioms Condpor.SegChain.unique
+#print axioms Condpor.getNext_fixpoint
+#print axioms Condpor.opLe_iff_isPrefixOf
+#print axioms Condpor.NrLe.opLe
+#print axioms Condpor.nrLe_fails
+#print axioms Condpor.tsSem_all_outcomes
+#print axioms Condpor.ts_executions
+#print axioms Condpor.ts_explore_length
+#print axioms Condpor.ctr_executions
+#print axioms Condpor.ctr_explore_length
+#print axioms Condpor.length_interleavings_mul
+#print axioms Condpor.length_interleavings_div
+#print axioms Condpor.ct_count
+#print axioms Condpor.ctr_executions_2_2
+#print axioms Condpor.ctr_executions_2_3
+#print axioms Condpor.ctr_executions_3_2
+#print axioms Condpor.CoChoice.classical
+#print axioms Condpor.StepR.lift
+#print axioms Condpor.ReachR.sound
+#print axioms Condpor.ReachR.a22
+#print axioms Condpor.terminatesR
+#print axioms Condpor.PrevStepR.lift
+#print axioms Condpor.prevStep_of_rvHyp
+#print axioms Condpor.ReachR.prevStepR_of_step
+#print axioms Condpor.path_uniqueR
+#print axioms Condpor.ReachR.eq_of_rfEq
+#print axioms Condpor.PrevReachR.init
+#print axioms Condpor.RvData'.co_eq
+#print axioms Condpor.ReachR.step_of_prevStepR
+#print axioms Condpor.completeR
+#print axioms Condpor.ReachR.reaches_full
+#print axioms Condpor.exploreR_spec
+#print axioms Condpor.exploreR_classes
+#print axioms Condpor.mem_exploreR_iff_canon
+#print axioms Condpor.exploreR_length_le
+#print axioms Condpor.exploreR_length_sc
+#print axioms Condpor.rww_three
+#print axioms Condpor.fig1_ex1_rf
+#print axioms Condpor.rfx_six
+#print axioms Condpor.rfx_repaired
+#print axioms Condpor.rfx_printed
+#print axioms Condpor.rfx_printed_classes
