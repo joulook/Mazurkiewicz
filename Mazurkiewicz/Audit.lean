@@ -11,6 +11,8 @@ import Mazurkiewicz.Trust.AlgExamples
 import Mazurkiewicz.Trust.Invariants
 import Mazurkiewicz.Trust.A22
 import Mazurkiewicz.Trust.Oracle
+import Mazurkiewicz.Induction.AssertExample
+import Mazurkiewicz.Induction.ToggleExample
 
 /-!
 # Axiom audit
@@ -276,3 +278,138 @@ import Mazurkiewicz.Trust.Oracle
 #print axioms Trust.Program.trunc_bounded
 #print axioms Trust.exploreC_trunc_spec
 #print axioms Trust.exploreCfgC_abs
+
+-- Induction A1
+#print axioms Trust.step_cases
+#print axioms Trust.Graph.IsPrefixOf.trans
+#print axioms Trust.greach_iff
+#print axioms Trust.greach_iff_built
+#print axioms Trust.post_singleton_finite
+#print axioms Trust.stepF_iterate
+#print axioms Trust.greach_eq_lfp
+#print axioms Trust.stabilises_iff
+#print axioms Trust.greach_finite_of_bounded
+#print axioms Trust.safe_iff_invariant
+
+-- Induction A2
+#print axioms Trust.mstep_iff
+#print axioms Trust.MStep.unique
+#print axioms Trust.exists_mstep
+#print axioms Trust.mreach_iff
+#print axioms Trust.exists_full_extension
+#print axioms Trust.apT_eq_some_iff
+#print axioms Trust.valt_range
+#print axioms Trust.greach_iff_msteps
+
+-- Induction A3
+#print axioms Trust.futEq_of_state
+#print axioms Trust.conf_eq_iff_threads
+#print axioms Trust.MStep.trace
+#print axioms Trust.MStep.memOf
+#print axioms Trust.MStep.opStep
+#print axioms Trust.exists_mstep_of_opStep
+#print axioms Trust.conf_reach
+#print axioms Trust.opReach_finite
+
+-- Induction A4
+#print axioms Trust.Program.residual_eq_iff
+#print axioms Trust.St.ofResid_injective
+#print axioms Trust.Graph.sc_induction
+#print axioms Trust.Graph.comp_init
+#print axioms Trust.Graph.comp_addMax
+#print axioms Trust.Graph.comp_facts
+#print axioms Trust.MStep.comp
+#print axioms Trust.mstep_comp_inv
+#print axioms Trust.greach_comp
+#print axioms Trust.msteps_decomp
+
+-- Induction A5
+#print axioms Trust.Certificate.run_valt
+#print axioms Trust.Certificate.safe
+#print axioms Trust.Abstraction.res_eq
+#print axioms Trust.Abstraction.confAbs_eq
+#print axioms Trust.Abstraction.ksound
+#print axioms Trust.Abstraction.kinductive_iff_representatives
+#print axioms Trust.Abstraction.stepOK_iff_obligation
+#print axioms Trust.Abstraction.reduction
+#print axioms Trust.Abstraction.safe_of_obligations_realised
+#print axioms Trust.Abstraction.safe_of_obligations
+
+-- Induction A6
+#print axioms Trust.mem_budgets
+#print axioms Trust.budgets_nodup
+#print axioms Trust.ExecSC.sum_cnt
+#print axioms Trust.cover_exists
+#print axioms Trust.cover_prefix
+#print axioms Trust.cover_full
+#print axioms Trust.cover_unique
+#print axioms Trust.Graph.comp_isPrefixOf_comp
+#print axioms Trust.Abstraction.stepOK_iff_full_prefix
+#print axioms Trust.Abstraction.stepOK_iff_full
+
+-- Induction A7
+#print axioms Trust.exploreC_complete
+#print axioms Trust.exploreC_sound
+#print axioms Trust.exploreC_optimal
+#print axioms Trust.check_sound_of_complete
+#print axioms Trust.check_sound
+#print axioms Trust.check_accepts
+#print axioms Trust.checkItems_nodup
+#print axioms Trust.check_count_eq_sum_ncard
+#print axioms Trust.exists_unique_budget
+#print axioms Trust.Mono.mono_check
+#print axioms Trust.Mono.mono_safe
+#print axioms Trust.Mono.mono_reject_wrong
+#print axioms Trust.Mono.mono_reject_unrealised
+#print axioms Trust.Mono.rw_opReach_finite
+
+-- Induction E1-E4 (error actions)
+#print axioms Trust.EGraph.consE_iff
+#print axioms Trust.SProgram.enc_bounded
+#print axioms Trust.psi_dHatTail
+#print axioms Trust.psiInv_dTail
+#print axioms Trust.psiInv_psi
+#print axioms Trust.psi_psiInv
+#print axioms Trust.psi_cons
+#print axioms Trust.psi_trace
+#print axioms Trust.SProgram.ExecE.dTail
+#print axioms Trust.exec_enc_dHatTail
+#print axioms Trust.execE_iff
+#print axioms Trust.execSC_enc
+#print axioms Trust.fullESC_iff
+#print axioms Trust.fullSC_enc
+#print axioms Trust.encEnum_complete
+#print axioms Trust.encEnum_sound
+#print axioms Trust.encEnum_eq_map
+#print axioms Trust.encEnum_optimal
+#print axioms Trust.encEnum_exploreC
+#print axioms Trust.safeE_iff
+#print axioms Trust.safeE_badErr_iff
+#print axioms Trust.badMark_extClosed
+#print axioms Trust.check_sound_err
+#print axioms Trust.Assert.assert_check
+#print axioms Trust.Assert.assert_safe
+#print axioms Trust.Assert.assert_reject
+
+-- Induction B1-B5 (cuts)
+#print axioms Trust.Abstraction.barsound_path
+#print axioms Trust.Abstraction.barsound
+#print axioms Trust.Abstraction.barInductive_iff_path
+#print axioms Trust.Abstraction.barInductive_iff_representatives
+#print axioms Trust.boundary_barK
+#print axioms Trust.Abstraction.barInductive_barK_iff
+#print axioms Trust.cutBar_extClosed
+#print axioms Trust.cutBar_congr
+#print axioms Trust.cutBar_depthLe
+#print axioms Trust.mem_boundary_cutBar
+#print axioms Trust.Abstraction.safe_of_bar_obligations
+#print axioms Trust.visit_spec
+#print axioms Trust.Abstraction.checkBar_path
+#print axioms Trust.Abstraction.checkBar_sound
+#print axioms Trust.Toggle.mem_cutBar_tg
+#print axioms Trust.Toggle.segBound_even
+#print axioms Trust.Toggle.segBound_odd
+#print axioms Trust.Toggle.toggle_check
+#print axioms Trust.Toggle.toggle_safe
+#print axioms Trust.Toggle.toggle_reject_fuel
+#print axioms Trust.Toggle.toggle_reject
