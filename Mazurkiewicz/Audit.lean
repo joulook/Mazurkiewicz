@@ -17,6 +17,12 @@ import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx
 import Mazurkiewicz.Condpor.StackEx
 import Mazurkiewicz.Condpor.Rf.Variant
+import Mazurkiewicz.Condpor.Rmw.Sym
+import Mazurkiewicz.Condpor.Rmw.Inv
+import Mazurkiewicz.Condpor.Rmw.PrevTerm
+import Mazurkiewicz.Condpor.Rmw.Complete
+import Mazurkiewicz.Condpor.Rmw.Exit
+import Mazurkiewicz.Condpor.Rmw.Instances
 
 /-!
 # Axiom audit
@@ -518,3 +524,93 @@ import Mazurkiewicz.Condpor.Rf.Variant
 #print axioms Condpor.rfx_repaired
 #print axioms Condpor.rfx_printed
 #print axioms Condpor.rfx_printed_classes
+
+-- Read-modify-write accesses (`Condpor/Rmw`), milestone R1
+#print axioms Condpor.Model.atomic
+#print axioms Condpor.Rmw.sound
+#print axioms Condpor.Rmw.path_unique
+#print axioms Condpor.Rmw.eq_of_abs_eq
+#print axioms Condpor.SC.extensibleX
+#print axioms Maz.Acyclic.of_insert
+#print axioms Condpor.Graph.scStep_addWrite_acyclic
+#print axioms Condpor.XProgram.Mate.read_act
+#print axioms Condpor.XProgram.RMW.read_act
+#print axioms Condpor.SC.exclExtensible
+#print axioms Condpor.ExtensibleX.sym_ext_read
+#print axioms Condpor.ExtensibleX.sym_ext_write
+#print axioms Condpor.ExtensibleX.sym_ext_wex
+#print axioms Condpor.ExtensibleX.sym_ext_loc_none
+#print axioms Condpor.ExtensibleX.sym_ext_cons
+#print axioms Condpor.ExclExtensible.sym
+#print axioms Condpor.SC.exclExtensible_sym
+
+-- Read-modify-write accesses, milestone R2: (P7), (P8)
+#print axioms Condpor.Graph.porf_of_read_succ
+#print axioms Condpor.RvHyp.succ_not_deleted
+#print axioms Condpor.XProgram.Mate.of_trace_eq
+#print axioms Condpor.XProgram.Mate.next_lt
+#print axioms Condpor.XProgram.pending_iff
+#print axioms Condpor.Program.nextOf_setRF_of_ne
+#print axioms Condpor.LastStep.isNext_mate
+#print axioms Condpor.Rmw.pending
+
+-- Read-modify-write accesses, milestone R3: completion and backward steps
+#print axioms Condpor.XProgram.exists_mate
+#print axioms Condpor.ExtensibleX.sym_cons_addMax
+#print axioms Condpor.ComplStep.towards
+#print axioms Condpor.Rmw.complChain
+#print axioms Condpor.XProgram.Mate.of_restrict
+#print axioms Condpor.Rmw.s2_nr
+#print axioms Condpor.Rmw.towards_rv
+#print axioms Condpor.Rmw.s2_of_towards
+#print axioms Condpor.PrevStep.invX
+#print axioms Condpor.PrevReach.invX
+#print axioms Condpor.PrevReach.next_of_prevStepX
+#print axioms Condpor.PrevReach.noEarlierSuccX
+#print axioms Condpor.PrevReachRW.a25X
+#print axioms Condpor.PrevReach.initX
+#print axioms Condpor.PrevReach.card_leX
+
+-- Read-modify-write accesses, milestone R4: completeness
+#print axioms Condpor.Reach.step_of_prevStep_nrX
+#print axioms Condpor.Reach.step_of_prevStep_rvX
+#print axioms Condpor.Reach.step_of_prevStepX
+#print axioms Condpor.PrevReach.reachX
+#print axioms Condpor.Rmw.complete
+#print axioms Condpor.Rmw.complete_sc
+
+-- Read-modify-write accesses, milestone R5: Theorem A.33 and the exit
+#print axioms Condpor.Reach.exists_stepX
+#print axioms Condpor.Reach.step_after
+#print axioms Condpor.Reach.exists_live_step
+#print axioms Condpor.Rmw.reaches_full
+#print axioms Condpor.Rmw.blocked_of_fruitless
+#print axioms Condpor.Rmw.collision_of_blocked
+#print axioms Condpor.Reach.exists_step_of_no_ex
+#print axioms Condpor.Rmw.reaches_full_of_no_ex
+#print axioms Condpor.Rmw.exists_reachX_err
+#print axioms Condpor.Rmw.exists_reachX_err_full
+#print axioms Condpor.Rmw.complete_exit
+
+-- Read-modify-write accesses, milestone R6: explorer and instances
+#print axioms Condpor.Rmw.explore_spec
+#print axioms Condpor.Config.atomicB_iff
+#print axioms Condpor.Config.consX_iff
+#print axioms Condpor.succsAt_eq
+#print axioms Condpor.exploreAt_eq
+#print axioms Condpor.exploreAt_spec
+#print axioms Condpor.mem_deadFromAt
+#print axioms Condpor.exists_dead_of_deadAt
+#print axioms Condpor.exists_dead_iff_deadAt
+#print axioms Condpor.exploreAtV_std
+#print axioms Condpor.faa2_two
+#print axioms Condpor.rw2_four
+#print axioms Condpor.faa3_six
+#print axioms Condpor.lock_count
+#print axioms Condpor.lock_seven
+#print axioms Condpor.lock_variant
+#print axioms Condpor.wfaa2_dead
+#print axioms Condpor.faar_dead
+#print axioms Condpor.faa3_dead
+#print axioms Condpor.lock_dead
+#print axioms Condpor.faa2_no_dead

@@ -47,6 +47,12 @@ import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx
 import Mazurkiewicz.Condpor.StackEx
 import Mazurkiewicz.Condpor.Rf.Variant
+import Mazurkiewicz.Condpor.Rmw.Sym
+import Mazurkiewicz.Condpor.Rmw.Inv
+import Mazurkiewicz.Condpor.Rmw.PrevTerm
+import Mazurkiewicz.Condpor.Rmw.Complete
+import Mazurkiewicz.Condpor.Rmw.Exit
+import Mazurkiewicz.Condpor.Rmw.Instances
 
 /-!
 # Mazurkiewicz
