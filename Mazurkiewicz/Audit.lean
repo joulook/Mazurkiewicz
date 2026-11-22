@@ -23,6 +23,9 @@ import Mazurkiewicz.Condpor.Rmw.PrevTerm
 import Mazurkiewicz.Condpor.Rmw.Complete
 import Mazurkiewicz.Condpor.Rmw.Exit
 import Mazurkiewicz.Condpor.Rmw.Instances
+import Mazurkiewicz.Condpor.Rmw.LocksEx
+import Mazurkiewicz.Condpor.Rmw.LocksEx3
+import Mazurkiewicz.Condpor.Rmw.LockMutex
 
 /-!
 # Axiom audit
@@ -614,3 +617,37 @@ import Mazurkiewicz.Condpor.Rmw.Instances
 #print axioms Condpor.faa3_dead
 #print axioms Condpor.lock_dead
 #print axioms Condpor.faa2_no_dead
+
+-- Locks (`Condpor/Rmw/Locks`, `LocksEx`), milestone K1
+#print axioms Condpor.lockSys_explore
+#print axioms Condpor.lockSys_complete
+#print axioms Condpor.lockSys_eq_of_abs_eq
+#print axioms Condpor.lockSys_blocked_of_fruitless
+#print axioms Condpor.lockT1
+#print axioms Condpor.lockT2
+#print axioms Condpor.lockT3
+#print axioms Condpor.lockT4
+#print axioms Condpor.lockT5
+#print axioms Condpor.lockT6
+#print axioms Condpor.lockT1_execs
+#print axioms Condpor.lockT6_execs
+#print axioms Condpor.lockT0
+#print axioms Condpor.lockT_no_dead
+#print axioms Condpor.LockLike.alternates
+#print axioms Condpor.lockState_holds_pos
+#print axioms Condpor.lockSys_lockLike
+#print axioms Condpor.lockSys_mutex
+
+-- Locks with three threads (`Condpor/Rmw/LocksEx3`), milestone K4
+#print axioms Condpor.lockT7
+#print axioms Condpor.lockT8
+#print axioms Condpor.lockT9
+#print axioms Condpor.lockT7_execs
+#print axioms Condpor.lockT10
+#print axioms Condpor.lockT11
+#print axioms Condpor.lockT12
+#print axioms Condpor.lockT13
+#print axioms Condpor.lockT14
+#print axioms Condpor.lockT15
+#print axioms Condpor.lockT16
+#print axioms Condpor.lockT17

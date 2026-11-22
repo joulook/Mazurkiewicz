@@ -53,6 +53,9 @@ import Mazurkiewicz.Condpor.Rmw.PrevTerm
 import Mazurkiewicz.Condpor.Rmw.Complete
 import Mazurkiewicz.Condpor.Rmw.Exit
 import Mazurkiewicz.Condpor.Rmw.Instances
+import Mazurkiewicz.Condpor.Rmw.LocksEx
+import Mazurkiewicz.Condpor.Rmw.LocksEx3
+import Mazurkiewicz.Condpor.Rmw.LockMutex
 
 /-!
 # Mazurkiewicz
