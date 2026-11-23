@@ -29,6 +29,7 @@ import Mazurkiewicz.Condpor.Rmw.LocksEx4
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
+import Mazurkiewicz.Jmt.Stage
 
 /-!
 # Axiom audit
@@ -686,3 +687,6 @@ import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
 #print axioms Condpor.MonSpec.traces_eq_signal_timed
 #print axioms Condpor.MonSpec.stuck_eq_signal_timed
 #print axioms Condpor.MonSpec.stuck_eq_signal
+
+-- Java memory model: justifications and stage states (`Jmt/Stage`)
+#print axioms Jmt.forward
