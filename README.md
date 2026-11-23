@@ -92,14 +92,18 @@ them.
 | A step emits the next name of its thread | `Labelling.names_cons` | `Pct/Basic.lean` |
 | The directed run never violates the directive | `Inv.step` | `Pct/Directed.lean` |
 | Coverage, deterministic form | `coverage` | `Pct/Coverage.lean` |
+| Coverage as a count | `card_good`, `card_params` | `Pct/Count.lean` |
 | A strongly hitting schedule exists | `exists_stronglyHits` | `Pct/Hitting.lean` |
 | Strong `d`-hitting gives `(d+1)`-hitting | `hits_of_stronglyHits_tail` | `Pct/Hitting.lean` |
 
 `coverage`: for every initial priority order that puts the thread of the
 first target last there are `d - 1` distinct change points within the length
 bound such that RandS with these parameters reaches a complete schedule and
-every complete schedule it reaches is in the bug. The count that gives the
-probability `1/(n k^(d-1))` is not formalised yet.
+every complete schedule it reaches is in the bug. `card_good`: for threads
+`0, …, n` and length bound `K`, at least `n!` of the `(n+1)! K^(d-1)`
+parameters of RandS (a permutation and `d - 1` change points) are such; a
+uniformly chosen parameter finds the bug with probability at least
+`1/((n+1) K^(d-1))`.
 
 ## Induction (`Mazurkiewicz/Induction/`)
 
