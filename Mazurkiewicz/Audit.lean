@@ -26,6 +26,7 @@ import Mazurkiewicz.Condpor.Rmw.Instances
 import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
 import Mazurkiewicz.Condpor.Rmw.LockMutex
+import Mazurkiewicz.Jmt.Stage
 
 /-!
 # Axiom audit
@@ -651,3 +652,6 @@ import Mazurkiewicz.Condpor.Rmw.LockMutex
 #print axioms Condpor.lockT15
 #print axioms Condpor.lockT16
 #print axioms Condpor.lockT17
+
+-- Java memory model: justifications and stage states (`Jmt/Stage`)
+#print axioms Jmt.forward
