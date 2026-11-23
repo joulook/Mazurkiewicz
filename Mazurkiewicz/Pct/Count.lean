@@ -19,6 +19,11 @@ with probability at least `n! / ((n+1)! K^(d-1)) = 1 / ((n+1) K^(d-1))`.
 * `rhoOf σ` is the initial order: `σ t` for a thread `t ≤ n`, and `t` itself
   for the identifiers above `n`, which is injective.
 * `kOf k` puts the change point `k i + 1` at the target `i + 1`.
+* The hypothesis `ha` (the thread of the first target is among `0, …, n`)
+  holds when all threads of the program are: a complete schedule that does
+  not violate the directive emits the first target, by a step of its thread.
+  Identifiers above `n` are allowed and keep the priority `d + t`; the
+  scheduler is the RandS of the text only when there are none.
 -/
 
 namespace Pct
