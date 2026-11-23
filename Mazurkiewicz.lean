@@ -56,6 +56,8 @@ import Mazurkiewicz.Condpor.Rmw.Instances
 import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
 import Mazurkiewicz.Condpor.Rmw.LockMutex
+import Mazurkiewicz.Pct.Coverage
+import Mazurkiewicz.Pct.Hitting
 
 /-!
 # Mazurkiewicz

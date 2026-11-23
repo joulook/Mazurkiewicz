@@ -77,6 +77,30 @@ local; `unlock` by a thread that does not hold the lock is an error event.
 `Rmw/LocksEx.lean` and `Rmw/LocksEx3.lean` compute the executions of eighteen
 small lock programs (T0 to T17) in the kernel.
 
+## PCT (`Mazurkiewicz/Pct/`)
+
+Randomized testing with a depth bound (Burckhardt, Kothari, Musuvathi,
+Nagarakatte, *A Randomized Scheduler with Probabilistic Guarantees of Finding
+Bugs*, ASPLOS 2010), for programs given as prefix-closed sets of schedules.
+"Violates" is read on prefixes, and the labelling is strict (a thread has
+started before its step has a name, and the next name of a thread changes
+only when the thread moves); the paper's proof uses both without stating
+them.
+
+| Result | Theorem | File |
+|---|---|---|
+| A step emits the next name of its thread | `Labelling.names_cons` | `Pct/Basic.lean` |
+| The directed run never violates the directive | `Inv.step` | `Pct/Directed.lean` |
+| Coverage, deterministic form | `coverage` | `Pct/Coverage.lean` |
+| A strongly hitting schedule exists | `exists_stronglyHits` | `Pct/Hitting.lean` |
+| Strong `d`-hitting gives `(d+1)`-hitting | `hits_of_stronglyHits_tail` | `Pct/Hitting.lean` |
+
+`coverage`: for every initial priority order that puts the thread of the
+first target last there are `d - 1` distinct change points within the length
+bound such that RandS with these parameters reaches a complete schedule and
+every complete schedule it reaches is in the bug. The count that gives the
+probability `1/(n k^(d-1))` is not formalised yet.
+
 ## Induction (`Mazurkiewicz/Induction/`)
 
 `k`-inductive sets and bars over execution graphs, with executable checkers
