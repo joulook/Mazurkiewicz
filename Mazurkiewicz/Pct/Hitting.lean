@@ -221,8 +221,10 @@ theorem sat_of_stronglyHits {D : PDir X d} {α₀ α : LinExt X} (h₀ : Sat α�
     have hjl : j < l := lt_of_lt_of_le hji hil
     exact α₀.not_lt_of_le (α₀.le_of_le hl) ((h₀ l).2 j hjl)
 
-/-- prop:sh-eq, the order part: with `U_i` as the set of the target `x_i`,
-the constraints on the sets are exactly strong hitting. -/
+/-- prop:sh-eq, first paragraph of the proof: `α` strongly hits `x` iff every
+member of `U_i` other than `x_i` is before `x_i`. The directive that lists
+the targets in the order of a strongly hitting schedule is not formalised
+here. -/
 theorem stronglyHits_iff_sets (α : LinExt X) (x : Fin d → X) :
     StronglyHits α x ↔ ∀ i, ∀ c ∈ belowSet x i, c ≠ x i → α.lt c (x i) := by
   rw [stronglyHits_iff]
