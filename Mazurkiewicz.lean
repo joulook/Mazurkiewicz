@@ -55,7 +55,10 @@ import Mazurkiewicz.Condpor.Rmw.Exit
 import Mazurkiewicz.Condpor.Rmw.Instances
 import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
+import Mazurkiewicz.Condpor.Rmw.LocksEx4
 import Mazurkiewicz.Condpor.Rmw.LockMutex
+import Mazurkiewicz.Condpor.Rmw.MonitorMutex
+import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
 
 /-!
 # Mazurkiewicz
