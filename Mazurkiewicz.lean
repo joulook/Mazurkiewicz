@@ -60,6 +60,8 @@ import Mazurkiewicz.Pct.Coverage
 import Mazurkiewicz.Pct.Count
 import Mazurkiewicz.Pct.Hitting
 import Mazurkiewicz.Jmt.Stage
+import Mazurkiewicz.Jmt.NoSo
+import Mazurkiewicz.Jmt.Structure
 
 /-!
 # Mazurkiewicz

@@ -27,6 +27,7 @@ import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Jmt.Stage
+import Mazurkiewicz.Jmt.Structure
 
 /-!
 # Axiom audit
@@ -655,3 +656,12 @@ import Mazurkiewicz.Jmt.Stage
 
 -- Java memory model: justifications and stage states (`Jmt/Stage`)
 #print axioms Jmt.forward
+
+-- Stage states: reachable executions are valid; (F3) is redundant (`Jmt/Structure`)
+#print axioms Jmt.Reach.valid
+#print axioms Jmt.Reach'.valid
+#print axioms Jmt.valid_iff_reach'
+#print axioms Jmt.forward'
+#print axioms Jmt.valid'_iff_valid
+#print axioms Jmt.Justifies.stage_valid
+#print axioms Jmt.Step.of_sameStepData
