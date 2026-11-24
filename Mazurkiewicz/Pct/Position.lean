@@ -23,7 +23,8 @@ How the text is read here.
   of another thread neither enables nor disables a thread that has started.
   It holds for `Sched(P)` for every program `P` (also for a thread that has
   not started), where the enabledness of `t` depends on the trace of `t`
-  only; this is not formalised. `posLab Q hQ` is the labelling
+  only; this is proved in `Program.lean` (`Program.sched_local`,
+  `Program.cons_cons_mem_sched_iff`). `posLab Q hQ` is the labelling
   of lem:position for a local `Q`.
 * `cntLab Q` leaves the condition "`t :: S` is a schedule" out. It is a
   strict labelling for every prefix-closed `Q`, and it emits the same names
@@ -47,16 +48,22 @@ How the text is read here.
   with `Viol` unfolded, and `pviolates_posLab_iff` the instance for
   `posLab`.
 
-Not formalised: programs, graphs, events, the start-event transformation
-`P⁺`, and therefore the facts that `Sched(P⁺)` is local, that every thread's
-first step is its start event, and the reading "`G_S` has an event of thread
-`t` with index `i`" of lem:position. `Q` is any prefix-closed schedule set
-(local, for `posLab`), which is more general than `Sched(P⁺)`. lem:ord-graph
-is not part of this file. Also not formalised: that the length of the
-trace of `t` in `G_S` is `count t S`, that `P_t` is defined on that trace
-iff `t :: S` is a schedule, and the set `Pos_P` with the identification of
-`ord S` as a word over it. The name type `Tid × ℕ` also contains the pairs
-with index `0`, which are never emitted; the text's name set excludes them.
+Not formalised here, and given by `Program.lean`: programs, the start-event
+transformation `P⁺` on schedules, that `Sched(P⁺)` is local
+(`Program.sched_plus_local`), that every thread's first step is its start
+event (`Program.plus_act_of_notMem`), that the length of the trace of `t`
+after `S` is `count t S` (`Program.length_tr`), that `P_t` is defined on
+that trace iff `t :: S` is a schedule (`Program.cons_mem_sched`,
+`Program.posNext_sched`), and, for bounded static programs, the set `Pos_P`
+(`Pos`) and the order word as a word over it (`ordP`,
+`Prog.HasLen.map_name_ordP`). `Q` is any prefix-closed schedule set (local,
+for `posLab`), which is more general than `Sched(P⁺)`.
+
+Still not formalised: execution graphs and events, the reading "`G_S` has an
+event of thread `t` with index `i`" of lem:position, lem:ord-graph, and
+`Pos_P` for programs that branch. The name type `Tid × ℕ` also contains the
+pairs with index `0`, which are never emitted; the text's name set excludes
+them.
 -/
 
 namespace Pct
@@ -65,8 +72,8 @@ namespace Pct
 
 /-- A step of another thread neither enables nor disables a thread that has
 taken a step. This is what Stability and BackStability of the position
-labelling need (lem:position); it holds for `Sched(P⁺)`, which is not
-formalised. -/
+labelling need (lem:position); it holds for `Sched(P)` and `Sched(P⁺)`
+(`Program.sched_local`, `Program.sched_plus_local` in `Program.lean`). -/
 def Prog.Local (Q : Prog) : Prop :=
   ∀ ⦃S : Sched⦄ ⦃t t' : Tid⦄, t' :: S ∈ Q.mem → t' ≠ t → t ∈ S →
     (t :: t' :: S ∈ Q.mem ↔ t :: S ∈ Q.mem)

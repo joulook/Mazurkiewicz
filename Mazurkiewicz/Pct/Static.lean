@@ -13,18 +13,21 @@ How the text is read here.
   the head, in which every element comes after all smaller elements
   (`PSched`). It stands for the order word `ord(S)` of a schedule `S` of a
   static program; a step of a thread that emits no position is not
-  represented. This is this file's reading: lem:static-sched covers complete
-  schedules only, and the text does not state that the order words of the
-  partial schedules of a static `P⁺` are exactly the `PSched` lists of
-  `(Pos_P, <)`. The proofs of lem:static-cond1 and of condition 1 in
-  thm:static (2) use this fact silently ("its step emits a position
-  `c' ≤ c` that does not occur in `ord(S)`").
+  represented. lem:static-sched covers complete schedules only; the sentence
+  that follows it states that the order words of the schedules of a static
+  `P⁺`, partial or complete, are exactly the `PSched` lists of `(Pos_P, <)`.
+  This characterisation is proved for programs in `Program.lean`
+  (`psched_ordP`, `Prog.HasLen.exists_ordP_eq`). The proofs of
+  lem:static-cond1 and of condition 1 in thm:static (2) use it ("its step
+  emits a position `c' ≤ c` that does not occur in `ord(S)`").
 * The names of a directive are elements of the poset (`PDir X d`), that is,
   positions. The text allows other names in `A_i` and `b_i`. A directive
   with a name that is not a position never p-guarantees a bug: condition 1
-  gives a complete schedule that does not p-violate it, and that schedule
-  does not emit all targets. So the restriction loses nothing; this argument
-  is not formalised.
+  gives a complete schedule that does not p-violate it, and a complete
+  schedule that does not p-violate the directive must emit every target and
+  every prerequisite; hence a p-guaranteeing directive cannot contain a name
+  that is never emitted. So the restriction loses nothing; this argument is
+  not formalised.
 * `Viol s D` is the right-hand side of lem:viol-order, taken as the
   definition of "`s` p-violates `D`". The operational definition of
   p-violation and lem:viol-order itself are in `Position.lean`
@@ -45,10 +48,13 @@ How the text is read here.
   makes the two agree, and `not_viol_cons_of_not_target` is lem:emission (3)
   read on lists.
 
-Not formalised: programs, static programs (def:static), the map `ord` from schedules of a
-static program to these lists (`Position.lean` defines `ord` on thread
-sequences only),
-lem:static-sched for programs, the depths `hdep`, `shdep`, `pdep` as numbers
+Not formalised here, and given by `Program.lean`: programs, static programs
+(def:static), `ord` as a list of positions (`ordP`), lem:static-sched for
+programs, and the bridges between schedules and order words, including the
+operational p-guarantee (`Prog.HasLen.pguarantees_iff_pguar`).
+
+Still not formalised: graph semantics, lem:ord-graph and `G_α`, the depths
+`hdep`, `shdep`, `pdep` as numbers with their inequalities and equality
 (only the implications between the guarantees are proved), and direction `≤`
 of prop:sh-eq as a statement about depths (it is `stronglyGuar_of_pguar`,
 and `stronglyGuar_of_pguar_linExt` for the quantification over schedules
@@ -65,8 +71,9 @@ variable {X : Type} [PartialOrder X] {d : ℕ}
 elements are distinct and every element comes after all smaller ones. This
 is this file's reading of the order words of the partial schedules of a
 static program (def:static); lem:static-sched states it for complete
-schedules only, and lem:static-cond1 and thm:static (2) use the partial
-version without stating it. -/
+schedules, and the partial version, which lem:static-cond1 and thm:static (2)
+use, is stated in the sentence after lem:static-sched (`psched_ordP` and
+`Prog.HasLen.exists_ordP_eq` in `Program.lean`). -/
 def PSched : List X → Prop
   | [] => True
   | x :: s => PSched s ∧ x ∉ s ∧ ∀ y, y < x → y ∈ s
