@@ -25,7 +25,10 @@ import Mazurkiewicz.Condpor.Rmw.Exit
 import Mazurkiewicz.Condpor.Rmw.Instances
 import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
+import Mazurkiewicz.Condpor.Rmw.LocksEx4
 import Mazurkiewicz.Condpor.Rmw.LockMutex
+import Mazurkiewicz.Condpor.Rmw.MonitorMutex
+import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
 import Mazurkiewicz.Jmt.Stage
 import Mazurkiewicz.Jmt.Structure
 
@@ -653,6 +656,38 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.lockT15
 #print axioms Condpor.lockT16
 #print axioms Condpor.lockT17
+
+-- Locks: queries and a constraint evaluation (`Condpor/Rmw/LocksEx4`)
+#print axioms Condpor.lockQ1
+#print axioms Condpor.lockQ4
+#print axioms Condpor.lockQ6
+#print axioms Condpor.lockS1
+
+-- Monitors (`Condpor/Rmw/Monitors`, `MonitorCode`, `MonitorMutex`)
+#print axioms Condpor.monSys_explore
+#print axioms Condpor.monSys_complete
+#print axioms Condpor.monSys_eq_of_abs_eq
+#print axioms Condpor.monSys_blocked_of_fruitless
+#print axioms Condpor.sigDecode_sigCode
+#print axioms Condpor.freeVal_injective
+#print axioms Condpor.monSys_mutex
+#print axioms Condpor.monState_holds_pos_iff
+#print axioms Condpor.monState_wait_restore
+
+-- The wait-set encoding against the wait set of the JLS (`MonitorSpec`, `MonitorSpecB`,
+-- `MonitorSpecT`)
+#print axioms Condpor.MonSpec.traces_eq
+#print axioms Condpor.MonSpec.traces_eq_signal
+#print axioms Condpor.MonSpec.traces_eq_bounded
+#print axioms Condpor.MonSpec.traces_eq_signal_bounded
+#print axioms Condpor.MonSpec.stuck_eq
+#print axioms Condpor.MonSpec.stuck_eq_bounded
+#print axioms Condpor.MonSpec.stuck_eq_signal_bounded
+#print axioms Condpor.MonSpec.traces_eq_timed
+#print axioms Condpor.MonSpec.stuck_eq_timed
+#print axioms Condpor.MonSpec.traces_eq_signal_timed
+#print axioms Condpor.MonSpec.stuck_eq_signal_timed
+#print axioms Condpor.MonSpec.stuck_eq_signal
 
 -- Java memory model: justifications and stage states (`Jmt/Stage`)
 #print axioms Jmt.forward
