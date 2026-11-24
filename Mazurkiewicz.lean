@@ -57,6 +57,8 @@ import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Jmt.Stage
+import Mazurkiewicz.Jmt.NoSo
+import Mazurkiewicz.Jmt.Structure
 
 /-!
 # Mazurkiewicz
