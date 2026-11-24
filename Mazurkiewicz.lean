@@ -59,7 +59,12 @@ import Mazurkiewicz.Condpor.Rmw.LocksEx4
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
+import Mazurkiewicz.Pct.Coverage
+import Mazurkiewicz.Pct.Count
+import Mazurkiewicz.Pct.Hitting
 import Mazurkiewicz.Jmt.Stage
+import Mazurkiewicz.Jmt.NoSo
+import Mazurkiewicz.Jmt.Structure
 
 /-!
 # Mazurkiewicz
