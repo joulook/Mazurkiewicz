@@ -27,7 +27,8 @@ How the text is read here.
   is not formalised.
 * `Viol s D` is the right-hand side of lem:viol-order, taken as the
   definition of "`s` p-violates `D`". The operational definition of
-  p-violation and lem:viol-order itself are not part of this file.
+  p-violation and lem:viol-order itself are in `Position.lean`
+  (`Labelling.IsPos.pviolates_iff_viol`).
 * A complete partial schedule is the same thing as a `LinExt`
   (`LinExt.ofSched`, `exists_sched_of_linExt`; lem:static-sched read on the
   poset), and on complete schedules `¬ Viol` is `Sat` of `Hitting.lean`
@@ -44,7 +45,9 @@ How the text is read here.
   makes the two agree, and `not_viol_cons_of_not_target` is lem:emission (3)
   read on lists.
 
-Not formalised: programs, static programs (def:static), the map `ord`,
+Not formalised: programs, static programs (def:static), the map `ord` from schedules of a
+static program to these lists (`Position.lean` defines `ord` on thread
+sequences only),
 lem:static-sched for programs, the depths `hdep`, `shdep`, `pdep` as numbers
 (only the implications between the guarantees are proved), and direction `≤`
 of prop:sh-eq as a statement about depths (it is `stronglyGuar_of_pguar`,

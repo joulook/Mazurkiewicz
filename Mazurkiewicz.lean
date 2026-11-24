@@ -63,6 +63,7 @@ import Mazurkiewicz.Pct.Coverage
 import Mazurkiewicz.Pct.Count
 import Mazurkiewicz.Pct.Hitting
 import Mazurkiewicz.Pct.Static
+import Mazurkiewicz.Pct.Position
 import Mazurkiewicz.Jmt.Stage
 import Mazurkiewicz.Must.Alg
 import Mazurkiewicz.Must.AlgCompute

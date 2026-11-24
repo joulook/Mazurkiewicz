@@ -99,6 +99,8 @@ them.
 | A p-guaranteeing directive gives a strongly guaranteeing tuple | `stronglyGuar_of_pguar` | `Pct/Static.lean` |
 | A guaranteeing tuple gives a p-guaranteeing directive | `pguar_chainDir` | `Pct/Static.lean` |
 | A strongly guaranteeing tuple gives a p-guaranteeing directive | `exists_pguar_of_stronglyGuar` | `Pct/Static.lean` |
+| The position labelling is a strict labelling | `posLab_strict`, `cntLab_strict` | `Pct/Position.lean` |
+| Violation of a position directive, by order | `Labelling.IsPos.pviolates_iff_viol` | `Pct/Position.lean` |
 
 `coverage`: for every initial priority order that puts the thread of the
 first target last there are `d - 1` distinct change points within the length
