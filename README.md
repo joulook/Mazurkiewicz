@@ -95,6 +95,10 @@ them.
 | Coverage as a count | `card_good`, `card_params` | `Pct/Count.lean` |
 | A strongly hitting schedule exists | `exists_stronglyHits` | `Pct/Hitting.lean` |
 | Strong `d`-hitting gives `(d+1)`-hitting | `hits_of_stronglyHits_tail` | `Pct/Hitting.lean` |
+| Condition 1 from one complete schedule (static programs) | `cond1_of_complete` | `Pct/Static.lean` |
+| A p-guaranteeing directive gives a strongly guaranteeing tuple | `stronglyGuar_of_pguar` | `Pct/Static.lean` |
+| A guaranteeing tuple gives a p-guaranteeing directive | `pguar_chainDir` | `Pct/Static.lean` |
+| A strongly guaranteeing tuple gives a p-guaranteeing directive | `exists_pguar_of_stronglyGuar` | `Pct/Static.lean` |
 
 `coverage`: for every initial priority order that puts the thread of the
 first target last there are `d - 1` distinct change points within the length
