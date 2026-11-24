@@ -664,3 +664,4 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Jmt.forward'
 #print axioms Jmt.valid'_iff_valid
 #print axioms Jmt.Justifies.stage_valid
+#print axioms Jmt.Step.of_sameStepData

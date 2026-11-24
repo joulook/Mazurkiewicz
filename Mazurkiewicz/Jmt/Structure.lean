@@ -19,6 +19,8 @@ Two statements on the stage states of `Jmt/Stage`.
   order relates keys of `V` only (`SyncSet`). So (F3) does not change the set
   of valid executions (`Jmt.valid_iff_reach'`), and neither does the condition
   (J3) of justifications (`Jmt.valid'_iff_valid`).
+* `Jmt.Step.of_sameStepData`: a step depends on its source state only through
+  the step data of that state.
 * `Jmt.valid_iff_exists_reach`, `Jmt.Justifies.stage_valid`: the valid
   executions are the executions of reachable states; every stage execution of
   a justification is valid.
@@ -166,6 +168,48 @@ theorem Justifies.stage_valid (hreg : ∀ E ∈ Ex, E.Regular) {T : KExec Key Va
   have hreach : Reach Ex init (pathOf E C (i + 1)) :=
     ⟨i + 1, pathOf E C, ⟨hpath.1, fun j hj => hpath.2 j (by omega)⟩, rfl⟩
   exact hreach.valid hreg
+
+/-! ## Steps depend on the step data only -/
+
+/-- Two stage states have the same *step data*: the same commit sets and
+frozen edges, the same happens-before, synchronization order and written
+values on the commit set, and the same sources on the first commit set. The
+last field says that the keys of the commit set are reads in both executions
+or in neither; for executions of a program this holds because the kind of an
+action is a part of its key. -/
+structure SameStepData (s₁ s₂ : State Key Val) : Prop where
+  before_eq : s₁.before = s₂.before
+  commit_eq : s₁.commit = s₂.commit
+  z_eq : s₁.Z = s₂.Z
+  hb : ∀ a ∈ s₁.commit, ∀ b ∈ s₁.commit, s₁.E.hb a b ↔ s₂.E.hb a b
+  so : ∀ a ∈ s₁.commit, ∀ b ∈ s₁.commit, s₁.E.so a b ↔ s₂.E.so a b
+  val : ∀ a ∈ s₁.commit, s₁.E.val a = s₂.E.val a
+  rf : ∀ a ∈ s₁.before, s₁.E.rf a = s₂.E.rf a
+  read : ∀ a ∈ s₁.commit, (s₁.E.rf a).isSome ↔ (s₂.E.rf a).isSome
+
+/-- **Steps depend on the step data only.** -/
+theorem Step.of_sameStepData {s₁ s₂ t : State Key Val} (h : Step Ex init s₁ t)
+    (hd : SameStepData s₁ s₂) (hs₂ : IsStage Ex init s₂) : Step Ex init s₂ t where
+  src := hs₂
+  tgt := h.tgt
+  before_eq := h.before_eq.trans hd.commit_eq
+  f2 := fun a ha b hb =>
+    (h.f2 a (hd.commit_eq ▸ ha) b (hd.commit_eq ▸ hb)).trans
+      (hd.hb a (hd.commit_eq ▸ ha) b (hd.commit_eq ▸ hb))
+  f3 := fun a ha b hb =>
+    (h.f3 a (hd.commit_eq ▸ ha) b (hd.commit_eq ▸ hb)).trans
+      (hd.so a (hd.commit_eq ▸ ha) b (hd.commit_eq ▸ hb))
+  f4 := fun a ha => (h.f4 a (hd.commit_eq ▸ ha)).trans (hd.val a (hd.commit_eq ▸ ha))
+  f5 := fun a ha => (h.f5 a (hd.before_eq ▸ ha)).trans (hd.rf a (hd.before_eq ▸ ha))
+  f7 := by
+    intro r hr hr' w hw
+    have hr₁ : r ∈ s₁.commit := hd.commit_eq ▸ hr
+    have hr₁' : r ∉ s₁.before := hd.before_eq ▸ hr'
+    have hsome : (s₁.E.rf r).isSome := (hd.read r hr₁).2 (by simp [hw])
+    obtain ⟨w₁, hw₁⟩ := Option.isSome_iff_exists.1 hsome
+    obtain ⟨w', hw', hmem⟩ := h.f7 r hr₁ hr₁' w₁ hw₁
+    exact ⟨w', hw', hd.before_eq ▸ hmem⟩
+  f8 := h.f8.trans (by rw [hd.z_eq])
 
 /-! ## The conditions (F3) and (J3) -/
 
