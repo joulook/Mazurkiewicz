@@ -37,8 +37,7 @@ open MustFast MustFast' Examples AlgEx Graph Relation
 
 /-! ### Helpers (`p2p`, `AP`) -/
 
-/-- Q9 for `tieL` and `p2p` (as `ReplayEx.hT`; `ReplayEx` cannot be imported with `PrefixNext`:
-both `Complete` and `PrefixNext` declare `Must.nextEv_tid`). -/
+/-- Q9 for `tieL` and `p2p` (as `ReplayEx.hT`). -/
 theorem hT : TieQ9 Model.p2p tieL := tieQ9_pick (M := Model.p2p) consAPB_iff_p2p .least
 
 theorem nextP_of {P : Program VPred} {G : Graph VPred} {e : Ev VPred} (hS : G.Supp)

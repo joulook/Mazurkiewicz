@@ -70,7 +70,8 @@ theorem Config.byId_eq {c : Config Q} (hc : c.OrdMem) (hw : c.G.Wf) {s : Ev Q}
 /-! ### `canonAdd` and `replay` -/
 
 omit [DecidableEq Q] [Membership Val Q] in
-theorem nextEv_tid {G : Graph Q} {t : Tid} {e : Ev Q} (h : P.nextEv G t = some e) : e.tid = t := by
+private theorem nextEv_tid {G : Graph Q} {t : Tid} {e : Ev Q} (h : P.nextEv G t = some e) :
+    e.tid = t := by
   unfold Program.nextEv at h
   obtain ⟨l, -, rfl⟩ := Option.map_eq_some_iff.mp h
   rfl
