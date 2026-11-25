@@ -14,8 +14,11 @@ well-formed configuration `c` whose graph is an execution of `lifeSys P n` with
 * `lifeClass_not_exploration_iff` (no hypothesis on the program): for a class that is
   neither `cut` nor `odd`, "not exploration" is "every lock, start and join wait is final".
 * `finalB_iff`: finality on the configuration is `rf = maxWrite` on its graph.
-* `lc_lemma8_terminal`: lemma 8 as designed, through `lifeClass`: in a full, terminal-valid
-  (not cut, not exploration) graph under an adequate bound, a thread whose start-read
+* `lifeClass_ne_cut_of_full`: a well-formed full configuration under an adequate bound is not
+  classified `cut`.
+* `lc_lemma8_terminal`: lemma 8 as designed, through `lifeClass`: in a full graph under an
+  adequate bound that is not exploration (hence terminal-valid, by
+  `lifeClass_ne_cut_of_full`), a thread whose start-read
   returned `0` has no write of its lifecycle location (in particular no start write), and
   its events are exactly the start-read `read (st t)` of value `0` and a `block`.
 -/
@@ -194,19 +197,37 @@ theorem lifeClass_not_exploration_iff {c : Config} (hcut : lifeClass P c ≠ .cu
 
 /-! ### Lemma 8 through the classifier -/
 
-/-- **Lemma 8 as designed**: in a full graph under an adequate bound whose class is neither
-`cut` nor `exploration` (a terminal-valid graph), a non-root thread whose start-read
-returned `0` (a start wait) has no write of its lifecycle location, in particular no start
-write, and its events are exactly that start-read `read (st t)` and a `block` after it. -/
+/-- A well-formed configuration whose graph is full under an adequate bound is not classified
+`cut` (the proof of `lifeClass_ne_cut`, for any well-formed configuration). -/
+theorem lifeClass_ne_cut_of_full (hn : adequateB P n = true) {c : Config} (hc : c.Wf)
+    (hf : (lifeSys P n).toProgram.Full c.abs) : lifeClass P c ≠ .cut := by
+  intro h
+  unfold lifeClass at h
+  by_cases h1 : P.threads.any (cutB P c) = true
+  swap
+  · simp only [h1, Bool.false_eq_true, ↓reduceIte] at h
+    split_ifs at h
+  obtain ⟨t, ht, hcut⟩ := List.any_eq_true.mp h1
+  apply lifeSys_noCut P hn hf ht
+  rw [← Config.trace_eq c hc t]
+  simp only [cutB, Bool.and_eq_true, Bool.not_eq_true', Option.isSome_iff_ne_none] at hcut
+  exact hcut
+
+/-- **Lemma 8 as designed**: in a full graph under an adequate bound whose class is not
+`exploration` (a terminal-valid graph: not `cut` by `lifeClass_ne_cut_of_full`), a non-root
+thread whose start-read returned `0` (a start wait) has no write of its lifecycle location,
+in particular no start write, and its events are exactly that start-read `read (st t)` and a
+`block` after it. -/
 theorem lc_lemma8_terminal (hF : Frag P) {c : Config} (hc : c.Wf)
     (hE : (lifeSys P n).toProgram.Exec c.abs) (hfull : (lifeSys P n).toProgram.Full c.abs)
-    (hn : adequateB P n = true) (hcut : lifeClass P c ≠ .cut)
-    (hexp : lifeClass P c ≠ .exploration) {r0 : TEv} (hr0 : r0 ∈ c.abs.events)
+    (hn : adequateB P n = true) (hexp : lifeClass P c ≠ .exploration) {r0 : TEv}
+    (hr0 : r0 ∈ c.abs.events)
     (hr : P.isRoot r0.tid = false) (h0i : r0.idx = 0) (hv : c.abs.ret r0 = some 0) :
     (∀ e ∈ c.abs.events, ∀ v, e.act ≠ .write (P.st r0.tid) v) ∧ r0.act = .read (P.st r0.tid) ∧
       ∃ b ∈ c.abs.events, b.tid = r0.tid ∧ b.idx = 1 ∧ b.act = .block ∧
         ∀ e ∈ c.abs.events, e.tid = r0.tid → e = r0 ∨ e = b := by
   have hG := hc.1
+  have hcut : lifeClass P c ≠ .cut := lifeClass_ne_cut_of_full hn hc hfull
   have ht : r0.tid ∈ P.threads := (ev_tab hE hr0).2.2
   have hn2 : 2 ≤ n := by
     have := List.all_eq_true.mp hn r0.tid ht

@@ -35,6 +35,10 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleCheck3
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck6
 import Mazurkiewicz.Condpor.Rmw.LifecycleClass
 import Mazurkiewicz.Condpor.Rmw.LifecycleLock
+import Mazurkiewicz.Condpor.Rmw.LifecycleSem
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemLemmas
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck2
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
@@ -721,6 +725,22 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.Life.lifeSys_mutex
 #print axioms Condpor.Life.lock_value_iff
 #print axioms Condpor.Life.j7b_target
+-- LC2-a: the machine of §5 (`LifecycleSem`, `LifecycleSemLemmas`, `LifecycleSemCheck*`)
+#print axioms Condpor.Life.lifeClass_ne_cut_of_full
+#print axioms Condpor.Life.Sem.enabled_iff_next
+#print axioms Condpor.Life.Sem.step_iff
+#print axioms Condpor.Life.Sem.step_det
+#print axioms Condpor.Life.Sem.enabled_tid_unique
+#print axioms Condpor.Life.Sem.Steps.lockInv
+#print axioms Condpor.Life.Sem.holdsM_unique
+#print axioms Condpor.Life.Sem.count_eq_zero_iff
+#print axioms Condpor.Life.Sem.commute
+#print axioms Condpor.Life.Sem.mem_machRuns_iff
+#print axioms Condpor.Life.Sem.cmp_spec
+#print axioms Condpor.Life.Sem.joinCycle_cmp
+#print axioms Condpor.Life.Sem.queryTry_cmp
+#print axioms Condpor.Life.Sem.machSideM_small
+#print axioms Condpor.Life.Sem.chain2_cmpM
 
 -- Monitors (`Condpor/Rmw/Monitors`, `MonitorCode`, `MonitorMutex`)
 #print axioms Condpor.monSys_explore
