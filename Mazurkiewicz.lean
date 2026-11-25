@@ -94,6 +94,14 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Step
 import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Emit
 import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Fin
 import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Final
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Trace
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Comm
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Bwd
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Ord
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Next
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Fwd
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateAll
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT

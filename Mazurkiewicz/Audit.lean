@@ -64,6 +64,14 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Step
 import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Emit
 import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Fin
 import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Final
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Trace
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Comm
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Bwd
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Ord
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Next
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Fwd
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateAll
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
@@ -840,3 +848,24 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Jmt.valid'_iff_valid
 #print axioms Jmt.Justifies.stage_valid
 #print axioms Jmt.Step.of_sameStepData
+
+-- LC2-c: gate clause 3 (`LifecycleGate3*`) and the gate with its corollaries (`LifecycleGateAll`)
+#print axioms Condpor.Life.Sem.mequiv_cons_split
+#print axioms Condpor.Life.Sem.emit_comm
+#print axioms Condpor.Life.Sem.run_move
+#print axioms Condpor.Life.Sem.gate3_bwd
+#print axioms Condpor.Life.Sem.order_conflict
+#print axioms Condpor.Life.Sem.next_same
+#print axioms Condpor.Life.Sem.key
+#print axioms Condpor.Life.Sem.fwd_core
+#print axioms Condpor.Life.Sem.gate3_fwd
+#print axioms Condpor.Life.Sem.gate3
+#print axioms Condpor.Life.Sem.gate
+#print axioms Condpor.Life.Sem.graphs_eq
+#print axioms Condpor.Life.Sem.graphs_set_eq
+#print axioms Condpor.Life.Sem.graphs_mequiv
+#print axioms Condpor.Life.Sem.lifeClass_congr
+#print axioms Condpor.Life.Sem.cfg_iff
+#print axioms Condpor.Life.Sem.exploration_not_run
+#print axioms Condpor.Life.Sem.explorer_termValid
+#print axioms Condpor.Life.Sem.hyp_graph_explored
