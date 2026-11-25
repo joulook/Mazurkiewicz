@@ -65,6 +65,10 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleCheck3
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck6
 import Mazurkiewicz.Condpor.Rmw.LifecycleClass
 import Mazurkiewicz.Condpor.Rmw.LifecycleLock
+import Mazurkiewicz.Condpor.Rmw.LifecycleSem
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemLemmas
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck2
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
