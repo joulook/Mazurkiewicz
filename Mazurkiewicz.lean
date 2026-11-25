@@ -56,6 +56,17 @@ import Mazurkiewicz.Condpor.Rmw.Instances
 import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
 import Mazurkiewicz.Condpor.Rmw.LocksEx4
+import Mazurkiewicz.Condpor.Rmw.Lifecycle
+import Mazurkiewicz.Condpor.Rmw.LifecycleLemmas
+import Mazurkiewicz.Condpor.Rmw.LifecycleEx
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck1
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck2
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck3
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck4
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck5
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck6
+import Mazurkiewicz.Condpor.Rmw.LifecycleClass
+import Mazurkiewicz.Condpor.Rmw.LifecycleLock
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT

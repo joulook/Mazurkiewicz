@@ -26,6 +26,17 @@ import Mazurkiewicz.Condpor.Rmw.Instances
 import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
 import Mazurkiewicz.Condpor.Rmw.LocksEx4
+import Mazurkiewicz.Condpor.Rmw.Lifecycle
+import Mazurkiewicz.Condpor.Rmw.LifecycleLemmas
+import Mazurkiewicz.Condpor.Rmw.LifecycleEx
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck1
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck2
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck3
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck4
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck5
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck6
+import Mazurkiewicz.Condpor.Rmw.LifecycleClass
+import Mazurkiewicz.Condpor.Rmw.LifecycleLock
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
@@ -662,6 +673,58 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.lockQ4
 #print axioms Condpor.lockQ6
 #print axioms Condpor.lockS1
+
+-- Thread lifecycle (`Condpor/Rmw/Lifecycle`, `LifecycleLemmas`, `LifecycleEx`,
+-- `LifecycleCheck*`), milestone LC1
+#print axioms Condpor.Life.lifeSys_explore
+#print axioms Condpor.Life.lifeSys_complete
+#print axioms Condpor.Life.lifeSys_eq_of_abs_eq
+#print axioms Condpor.Life.lifeSys_blocked_of_fruitless
+#print axioms Condpor.Life.maxStarts_eq_count
+#print axioms Condpor.Life.lifeSys_noCut
+#print axioms Condpor.Life.lifeClass_ne_cut
+#print axioms Condpor.Life.lifeTarget_head
+#print axioms Condpor.Life.frag_of_fragB
+#print axioms Condpor.Life.lc_lemma1_nonroot
+#print axioms Condpor.Life.lc_lemma1_root
+#print axioms Condpor.Life.lc_lemma2
+#print axioms Condpor.Life.lc_lemma3
+#print axioms Condpor.Life.lc_lemma4
+#print axioms Condpor.Life.lc_lemma5
+#print axioms Condpor.Life.lc_lemma6
+#print axioms Condpor.Life.lc_lemma7
+#print axioms Condpor.Life.lc_lemma8
+#print axioms Condpor.Life.lc_lemma8_block
+#print axioms Condpor.Life.start_unique
+#print axioms Condpor.Life.finish_unique
+#print axioms Condpor.Life.st_write_val
+#print axioms Condpor.Life.final_join_target
+#print axioms Condpor.Life.rejected
+#print axioms Condpor.Life.startJoin_target
+#print axioms Condpor.Life.joinCycle_target
+#print axioms Condpor.Life.cutErr_target
+#print axioms Condpor.Life.twoJoin_target
+#print axioms Condpor.Life.lowChild_target
+#print axioms Condpor.Life.dl2_target
+#print axioms Condpor.Life.tryjoin2_target
+-- LC1 round 2
+#print axioms Condpor.Life.fragB_eq
+#print axioms Condpor.Life.rjTwoStarters_rule
+#print axioms Condpor.Life.rjTwoStarts_rule
+#print axioms Condpor.Life.rjSelfStart_rule
+#print axioms Condpor.Life.outsideAsmSt_class
+#print axioms Condpor.Life.outsideLockAsm_class
+#print axioms Condpor.Life.lc_lemma7_src
+#print axioms Condpor.Life.final_join_target_full
+#print axioms Condpor.Life.lifeClass_ne_odd
+#print axioms Condpor.Life.lifeClass_not_exploration_iff
+#print axioms Condpor.Life.lc_lemma8_terminal
+#print axioms Condpor.Life.lifeSys_lockLike
+#print axioms Condpor.Life.lifeSys_mutex
+#print axioms Condpor.Life.lock_value_iff
+#print axioms Condpor.Life.dl2j_target
+#print axioms Condpor.Life.diamondB_target
+#print axioms Condpor.Life.j7b_target
 
 -- Monitors (`Condpor/Rmw/Monitors`, `MonitorCode`, `MonitorMutex`)
 #print axioms Condpor.monSys_explore
