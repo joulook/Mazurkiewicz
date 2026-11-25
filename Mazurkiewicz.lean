@@ -65,6 +65,7 @@ import Mazurkiewicz.Pct.Hitting
 import Mazurkiewicz.Pct.Static
 import Mazurkiewicz.Pct.Position
 import Mazurkiewicz.Pct.Program
+import Mazurkiewicz.Pct.Free
 import Mazurkiewicz.Jmt.Stage
 import Mazurkiewicz.Must.Alg
 import Mazurkiewicz.Must.AlgCompute

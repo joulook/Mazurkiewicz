@@ -112,6 +112,10 @@ them.
 | A guaranteeing tuple gives a p-guaranteeing directive, on schedules | `Program.Static.pguarantees_chainDir` | `Pct/Program.lean` |
 | A strongly guaranteeing tuple gives a p-guaranteeing directive, on schedules | `Program.Static.exists_pguarantees_of_stronglyGuar` | `Pct/Program.lean` |
 | Complete schedules of `P⁺`, by the complete schedules of `P` | `Program.complete_plus_iff` | `Pct/Program.lean` |
+| A free step creates no p-violation | `Directive.PGuarantees.not_pviolates_freeStep` | `Pct/Free.lean` |
+| A complete schedule with free steps only is in the bug | `Directive.PGuarantees.mem_of_free_complete` | `Pct/Free.lean` |
+| A free step exists; a complete schedule with free steps only exists (bounded programs) | `Directive.exists_freeStep`, `Directive.PGuarantees.exists_free_complete_mem` | `Pct/Free.lean` |
+| Depth 1: the schedules that run the thread of the target last are in the bug | `Prog.HasLen.mem_of_thr_last_one` | `Pct/Free.lean` |
 
 `coverage`: for every initial priority order that puts the thread of the
 first target last there are `d - 1` distinct change points within the length
