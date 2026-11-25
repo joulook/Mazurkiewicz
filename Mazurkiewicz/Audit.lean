@@ -39,6 +39,21 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleSem
 import Mazurkiewicz.Condpor.Rmw.LifecycleSemLemmas
 import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck
 import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck2
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateGB
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateRun
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate1
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateTrace
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateEmit
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateSim
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateStep
+import Mazurkiewicz.Condpor.Rmw.LifecycleGatePres
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateFinal
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateAtom
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateLast
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateCls
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateClass
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
@@ -741,6 +756,28 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.Life.Sem.queryTry_cmp
 #print axioms Condpor.Life.Sem.machSideM_small
 #print axioms Condpor.Life.Sem.chain2_cmpM
+-- LC2-b (`LifecycleGate`, `LifecycleGateGB`, `LifecycleGateRun`, `LifecycleGate1`, `LifecycleGateTrace`)
+#print axioms Condpor.Life.Sem.abs_eq_of_ser_eq
+#print axioms Condpor.Life.Sem.mem_runsM
+#print axioms Condpor.Life.Sem.cmpM_spec
+#print axioms Condpor.Life.Sem.GB.Ok.wf
+#print axioms Condpor.Life.Sem.GB.Ok.sc
+#print axioms Condpor.Life.Sem.MInv.steps
+#print axioms Condpor.Life.Sem.runCfg_wf_sc
+#print axioms Condpor.Life.Sem.gate1_of_parts
+#print axioms Condpor.Life.Sem.exec_of_execT
+#print axioms Condpor.Life.Sem.full_of_tr
+#print axioms Condpor.Life.Sem.ExecT.push
+#print axioms Condpor.Life.Sem.g1Exec_full_of_sim
+#print axioms Condpor.Life.Sem.SInv.step
+#print axioms Condpor.Life.Sem.finalize_spec
+#print axioms Condpor.Life.Sem.g1Sim
+#print axioms Condpor.Life.Sem.g1Exec
+#print axioms Condpor.Life.Sem.g1Full
+#print axioms Condpor.Life.Sem.g1Atomic
+#print axioms Condpor.Life.Sem.g1Class
+#print axioms Condpor.Life.Sem.gate1
+#print axioms Condpor.Life.Sem.gate2_of_parts
 
 -- Monitors (`Condpor/Rmw/Monitors`, `MonitorCode`, `MonitorMutex`)
 #print axioms Condpor.monSys_explore
