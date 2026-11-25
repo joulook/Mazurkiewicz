@@ -49,6 +49,11 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleGateSim
 import Mazurkiewicz.Condpor.Rmw.LifecycleGateStep
 import Mazurkiewicz.Condpor.Rmw.LifecycleGatePres
 import Mazurkiewicz.Condpor.Rmw.LifecycleGateFinal
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateAtom
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateLast
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateCls
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateClass
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
@@ -769,6 +774,10 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.Life.Sem.g1Sim
 #print axioms Condpor.Life.Sem.g1Exec
 #print axioms Condpor.Life.Sem.g1Full
+#print axioms Condpor.Life.Sem.g1Atomic
+#print axioms Condpor.Life.Sem.g1Class
+#print axioms Condpor.Life.Sem.gate1
+#print axioms Condpor.Life.Sem.gate2_of_parts
 
 -- Monitors (`Condpor/Rmw/Monitors`, `MonitorCode`, `MonitorMutex`)
 #print axioms Condpor.monSys_explore

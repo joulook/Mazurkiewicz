@@ -1,4 +1,5 @@
 import Mazurkiewicz.Condpor.Rmw.LifecycleGateEmit
+import Mazurkiewicz.Condpor.Rmw.LifecycleLock
 
 /-!
 # Gate clause 1: the simulation invariant (LC2-b, part 6)
@@ -27,16 +28,6 @@ namespace Sem
 
 variable {P : LProg}
 
-theorem mem_lock' (hF : Frag P) {l : Loc} (hl : P.isLock l = true) : lifeMem P l = 0 := by
-  unfold lifeMem
-  have : P.roots.any (fun r => decide (P.st r = l)) = false := by
-    rw [Bool.eq_false_iff]
-    intro h
-    obtain ⟨r, hr, hrl⟩ := List.any_eq_true.mp h
-    simp only [decide_eq_true_eq] at hrl
-    rw [← hrl, hF.st_not_lock r (hF.roots_sub r hr)] at hl
-    cases hl
-  simp [this]
 
 /-- The compiled body state after the values `u` of thread `t` is `st` (for a non-root thread,
 after a start-read that did not return `0`). -/
@@ -96,7 +87,7 @@ theorem sinv_init (hF : Frag P) (n : ℕ) : SInv P n (MState.init P) GB.empty wh
   newRoot := by intro t hr; simp [MState.init, hr]
   lockInv := lockInv_init
   vData := by intro x _; simp [GB.last, GB.empty, valE, MState.init]
-  vLock := by intro l hl; simp [GB.last, GB.empty, valE, MState.init, mem_lock' hF hl]
+  vLock := by intro l hl; simp [GB.last, GB.empty, valE, MState.init, mem_lock hF hl]
   vLife := by
     intro t ht
     simp only [GB.last, GB.empty, List.getLast?_nil, valE, MState.init, hF.mem_st ht]
