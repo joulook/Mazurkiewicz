@@ -54,6 +54,16 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleGateLast
 import Mazurkiewicz.Condpor.Rmw.LifecycleGateCls
 import Mazurkiewicz.Condpor.Rmw.LifecycleGateClass
 import Mazurkiewicz.Condpor.Rmw.LifecycleGate2
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Lin
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Adj
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Run
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Tr
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Replay
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Next
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Step
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Emit
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Fin
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Final
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
@@ -778,6 +788,20 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.Life.Sem.g1Class
 #print axioms Condpor.Life.Sem.gate1
 #print axioms Condpor.Life.Sem.gate2_of_parts
+#print axioms Condpor.Life.Sem.g2Lin
+#print axioms Condpor.Life.Sem.g2Adj
+#print axioms Condpor.Life.Sem.exists_runList
+#print axioms Condpor.Life.Sem.abs_eq_of_subLin
+#print axioms Condpor.Life.Sem.g2Replay_of_parts
+#print axioms Condpor.Life.Sem.g2Steps_of_step
+#print axioms Condpor.Life.Sem.Ctx.enabled
+#print axioms Condpor.Life.Sem.Ctx.emit
+#print axioms Condpor.Life.Sem.g2Step
+#print axioms Condpor.Life.Sem.g2Steps
+#print axioms Condpor.Life.Sem.FCtx.thread
+#print axioms Condpor.Life.Sem.g2Final
+#print axioms Condpor.Life.Sem.g2Replay
+#print axioms Condpor.Life.Sem.gate2
 
 -- Monitors (`Condpor/Rmw/Monitors`, `MonitorCode`, `MonitorMutex`)
 #print axioms Condpor.monSys_explore
