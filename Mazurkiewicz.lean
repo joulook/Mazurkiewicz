@@ -69,6 +69,16 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleSem
 import Mazurkiewicz.Condpor.Rmw.LifecycleSemLemmas
 import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck
 import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck2
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateGB
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateRun
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate1
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateTrace
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateEmit
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateSim
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateStep
+import Mazurkiewicz.Condpor.Rmw.LifecycleGatePres
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateFinal
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT

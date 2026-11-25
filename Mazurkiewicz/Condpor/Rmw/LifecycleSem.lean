@@ -466,13 +466,14 @@ def Gate1 : Prop :=
         (lifeSys P n).toProgram.Full (runCfg P rs s).abs ∧
         lifeClass P (runCfg P rs s) = (mclass P s).toL
 
-/-- Clause 2: every terminal-valid full graph of `lifeSys` is the graph of a maximal run. -/
+/-- Clause 2: every terminal-valid full graph of `lifeSys` is the graph of a maximal run.
+(Not `cut` is not a hypothesis: a well-formed full configuration under an adequate bound is
+never `cut`, `lifeClass_ne_cut_of_full` in `LifecycleClass.lean`.) -/
 def Gate2 : Prop :=
   ∀ (P : LProg) (n : ℕ), fragB P = true → adequateB P n = true →
     ∀ c : Config, c.Wf → (lifeSys P n).toProgram.Exec c.abs →
       ((Model.atomic (lifeSys P n) SC).sym EqSem.solver).cons c.abs →
-      (lifeSys P n).toProgram.Full c.abs →
-      lifeClass P c ≠ .cut → lifeClass P c ≠ .exploration →
+      (lifeSys P n).toProgram.Full c.abs → lifeClass P c ≠ .exploration →
       ∃ rs s, MaxRun P rs s ∧ (runCfg P rs s).abs = c.abs
 
 /-- Clause 3: two maximal runs have the same graph iff they are Mazurkiewicz-equivalent. -/
