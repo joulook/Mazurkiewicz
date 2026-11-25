@@ -1,4 +1,6 @@
 import Mazurkiewicz.Condpor.Rmw.LifecycleEx
+-- Imported only to make the build sequential: each of these modules needs 4-11 GB to check.
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck3
 
 /-!
 # Thread lifecycle: a shrunk member of the J7 family

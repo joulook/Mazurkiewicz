@@ -1,4 +1,6 @@
 import Mazurkiewicz.Condpor.Rmw.LifecycleEx
+-- Not imported from the root file: checking this module needs about 15 GB, more than the CI
+-- runner has. Build on demand: `lake build Mazurkiewicz.Condpor.Rmw.LifecycleCheck5`.
 
 /-!
 # Thread lifecycle: a shrunk member of the diamond family

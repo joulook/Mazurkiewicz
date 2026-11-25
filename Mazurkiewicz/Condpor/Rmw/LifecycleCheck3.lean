@@ -1,4 +1,6 @@
 import Mazurkiewicz.Condpor.Rmw.LifecycleEx
+-- Imported only to make the build sequential: each of these modules needs 4-11 GB to check.
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck2
 
 /-!
 # Thread lifecycle: `dl2` and `tryjoin2`

@@ -62,8 +62,6 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleEx
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck1
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck2
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck3
-import Mazurkiewicz.Condpor.Rmw.LifecycleCheck4
-import Mazurkiewicz.Condpor.Rmw.LifecycleCheck5
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck6
 import Mazurkiewicz.Condpor.Rmw.LifecycleClass
 import Mazurkiewicz.Condpor.Rmw.LifecycleLock

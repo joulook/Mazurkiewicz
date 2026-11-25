@@ -32,8 +32,6 @@ import Mazurkiewicz.Condpor.Rmw.LifecycleEx
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck1
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck2
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck3
-import Mazurkiewicz.Condpor.Rmw.LifecycleCheck4
-import Mazurkiewicz.Condpor.Rmw.LifecycleCheck5
 import Mazurkiewicz.Condpor.Rmw.LifecycleCheck6
 import Mazurkiewicz.Condpor.Rmw.LifecycleClass
 import Mazurkiewicz.Condpor.Rmw.LifecycleLock
@@ -722,8 +720,6 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.Life.lifeSys_lockLike
 #print axioms Condpor.Life.lifeSys_mutex
 #print axioms Condpor.Life.lock_value_iff
-#print axioms Condpor.Life.dl2j_target
-#print axioms Condpor.Life.diamondB_target
 #print axioms Condpor.Life.j7b_target
 
 -- Monitors (`Condpor/Rmw/Monitors`, `MonitorCode`, `MonitorMutex`)
