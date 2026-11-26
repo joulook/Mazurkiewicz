@@ -42,6 +42,12 @@ import Mazurkiewicz.Induction.Bars
 import Mazurkiewicz.Induction.CutBar
 import Mazurkiewicz.Induction.BarCheck
 import Mazurkiewicz.Induction.ToggleExample
+import Mazurkiewicz.Induction.MP.Defs
+import Mazurkiewicz.Induction.MP.Steps
+import Mazurkiewicz.Induction.MP.StepsModel
+import Mazurkiewicz.Induction.MP.Programs
+import Mazurkiewicz.Induction.MP.SeedComp
+import Mazurkiewicz.Induction.MP.SeedCompRet
 import Mazurkiewicz.Audit
 import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx

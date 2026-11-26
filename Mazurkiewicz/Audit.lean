@@ -13,6 +13,8 @@ import Mazurkiewicz.Trust.A22
 import Mazurkiewicz.Trust.Oracle
 import Mazurkiewicz.Induction.AssertExample
 import Mazurkiewicz.Induction.ToggleExample
+import Mazurkiewicz.Induction.MP.StepsModel
+import Mazurkiewicz.Induction.MP.SeedCompRet
 import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx
 import Mazurkiewicz.Condpor.StackEx
@@ -578,6 +580,54 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.rfx_repaired
 #print axioms Condpor.rfx_printed
 #print axioms Condpor.rfx_printed_classes
+
+-- Induction C0-C1b (message passing: `Induction/MP/Defs`, `Steps`, `StepsModel`)
+#print axioms Must.Ind.decM_encM
+#print axioms Must.Ind.sendsTagged_of_exec
+#print axioms Must.Graph.Wf.sendCodeAt_eq
+#print axioms Must.Graph.Wf.sendCodeAt_zero
+#print axioms Must.Graph.Wf.unreadEvAt_eq
+#print axioms Must.Graph.Wf.pend_eq
+#print axioms Must.Ind.nodup_env
+#print axioms Must.Ind.nodup_nil
+#print axioms Must.Ind.pstep_iff
+#print axioms Must.Ind.mreach_iff
+#print axioms Must.Ind.stepsN_iff
+#print axioms Must.Ind.prefix_steps
+#print axioms Must.Ind.term_iff_sem
+#print axioms Must.Ind.term_iff_stuck
+#print axioms Must.Ind.asyn_step
+#print axioms Must.Ind.p2p_step
+#print axioms Must.Ind.p2p_cons_iff_paper
+#print axioms Must.Ind.botExt_graph
+#print axioms Must.Ind.botExt_full
+#print axioms Must.Ind.botExt_restrict
+#print axioms Must.Ind.botExt_incons
+
+-- Induction C2-C3b (message passing: `Induction/MP/Programs`, `SeedComp`, `SeedCompRet`)
+#print axioms Must.Ind.prefixStep_env
+#print axioms Must.Ind.trunc_bounded
+#print axioms Must.Ind.exec_trunc_iff
+#print axioms Must.Ind.exec_of_isPrefixOf
+#print axioms Must.Ind.seedRes_congr
+#print axioms Must.Ind.sendsGraph_cons
+#print axioms Must.Ind.frag_seed
+#print axioms Must.Ind.seed_isPrefixOf
+#print axioms Must.Ind.frag_cnt_idle
+#print axioms Must.Ind.frag_seedEv
+#print axioms Must.Ind.scomp_seed
+#print axioms Must.Ind.scomp_add
+#print axioms Must.Ind.scomp_cnt
+#print axioms Must.Ind.scomp_injective
+#print axioms Must.Ind.scomp_ret_old
+#print axioms Must.Ind.scomp_ret_emb
+#print axioms Must.Ind.scomp_trace
+#print axioms Must.Ind.ehat_lab
+#print axioms Must.Ind.ehat_bij
+#print axioms Must.Ind.ehat_tid
+#print axioms Must.Ind.ehat_idx
+#print axioms Must.Ind.ehat_soDst
+#print axioms Must.Ind.ehat_soPaper
 
 -- Read-modify-write accesses (`Condpor/Rmw`), milestone R1
 #print axioms Condpor.Model.atomic
