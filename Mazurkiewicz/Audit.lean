@@ -15,6 +15,9 @@ import Mazurkiewicz.Induction.AssertExample
 import Mazurkiewicz.Induction.ToggleExample
 import Mazurkiewicz.Induction.MP.StepsModel
 import Mazurkiewicz.Induction.MP.SeedCompRet
+import Mazurkiewicz.Induction.MP.Instances
+import Mazurkiewicz.Induction.MP.Terminal
+import Mazurkiewicz.Induction.MP.CheckSound
 import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx
 import Mazurkiewicz.Condpor.StackEx
@@ -628,6 +631,75 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Must.Ind.ehat_idx
 #print axioms Must.Ind.ehat_soDst
 #print axioms Must.Ind.ehat_soPaper
+
+-- Induction C4a-C5 (message passing: `Induction/MP/StepsMore`, `CompFrag`, `Commute`, `Instances`)
+#print axioms Must.Ind.preach_iff
+#print axioms Must.Ind.us_scomp
+#print axioms Must.Ind.frag_scomp
+#print axioms Must.Ind.pendM_scomp
+#print axioms Must.Ind.pend_scomp
+#print axioms Must.Ind.scomp_mono
+#print axioms Must.Ind.frag_scomp_injective
+#print axioms Must.Ind.step_scomp
+#print axioms Must.Ind.scomp_step
+#print axioms Must.Ind.stepsN_iff_frag
+#print axioms Must.Ind.envRes_eq
+#print axioms Must.Ind.p2pRes_eq
+#print axioms Must.Ind.seedOK_env
+#print axioms Must.Ind.pendEnum_of_pendM
+#print axioms Must.Ind.seedOK_p2p
+#print axioms Must.Ind.scomp_congr_seed
+#print axioms Must.Ind.seedOK_p2p_unique
+#print axioms Must.Ind.scomp_eq_compP2P
+#print axioms Must.Ind.seedOK_env_enum
+#print axioms Must.Ind.mp_compose_1
+#print axioms Must.Ind.mp_compose_2
+#print axioms Must.Ind.mp_compose_3
+#print axioms Must.Ind.mp_compose_4
+#print axioms Must.Ind.mp_compose_steps_1
+#print axioms Must.Ind.mp_compose_steps_2
+#print axioms Must.Ind.mp_compose_steps_3
+#print axioms Must.Ind.p2p_compose_1
+#print axioms Must.Ind.p2p_compose_2
+#print axioms Must.Ind.p2p_compose_3
+#print axioms Must.Ind.p2p_compose_4
+#print axioms Must.Ind.p2p_compose_steps_1
+#print axioms Must.Ind.p2p_compose_steps_2
+#print axioms Must.Ind.p2p_compose_steps_3
+
+-- Induction C6-C7 (message passing: `Induction/MP/KInd`, `Terminal`)
+#print axioms Must.Ind.SAbs.ksound
+#print axioms Must.Ind.SAbs.stepOK_iff_fragOK
+#print axioms Must.Ind.SAbs.kinductive_iff_representatives
+#print axioms Must.Ind.compositionalEnv_imp
+#print axioms Must.Ind.h_compositional_env
+#print axioms Must.Ind.h_compositional_p2p
+#print axioms Must.Ind.exists_term_ext
+#print axioms Must.Ind.frag_len_eq
+#print axioms Must.Ind.SAbs.budgetProg_bounded
+#print axioms Must.Ind.SAbs.cover_exists
+#print axioms Must.Ind.SAbs.cover_frag
+#print axioms Must.Ind.SAbs.cover_unique
+#print axioms Must.Ind.SAbs.fragOK_iff_term
+
+-- Induction C8a-C8b (message passing: `Induction/MP/CheckRun`, `CheckSound`)
+#print axioms Must.Ind.runTerm_spec
+#print axioms Must.Ind.runTerm_fuel
+#print axioms Must.Ind.checkS_fst
+#print axioms Must.Ind.checkS_snd
+#print axioms Must.Ind.checkS_fuel
+#print axioms Must.Ind.checkS_count
+#print axioms Must.Ind.checkS_once
+#print axioms Must.Ind.checkS_kinductive
+#print axioms Must.Ind.checkS_sound
+#print axioms Must.Ind.checkS_sound_explicit
+#print axioms Must.Ind.checkS_accepts
+#print axioms Must.Ind.checkAsyn_kinductive
+#print axioms Must.Ind.checkAsyn_sound
+#print axioms Must.Ind.checkP2P_kinductive
+#print axioms Must.Ind.checkP2P_sound
+#print axioms Must.Ind.checkP2PAsyn_kinductive
+#print axioms Must.Ind.checkP2PAsyn_sound
 
 -- Read-modify-write accesses (`Condpor/Rmw`), milestone R1
 #print axioms Condpor.Model.atomic
