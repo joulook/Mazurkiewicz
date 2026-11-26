@@ -48,6 +48,14 @@ import Mazurkiewicz.Induction.MP.StepsModel
 import Mazurkiewicz.Induction.MP.Programs
 import Mazurkiewicz.Induction.MP.SeedComp
 import Mazurkiewicz.Induction.MP.SeedCompRet
+import Mazurkiewicz.Induction.MP.StepsMore
+import Mazurkiewicz.Induction.MP.CompFrag
+import Mazurkiewicz.Induction.MP.Commute
+import Mazurkiewicz.Induction.MP.Instances
+import Mazurkiewicz.Induction.MP.KInd
+import Mazurkiewicz.Induction.MP.Terminal
+import Mazurkiewicz.Induction.MP.CheckRun
+import Mazurkiewicz.Induction.MP.CheckSound
 import Mazurkiewicz.Audit
 import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx
