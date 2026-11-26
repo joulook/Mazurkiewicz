@@ -22,7 +22,7 @@ lem:p2p-compose, prop:p2p-compose (Section 7), as instances of the one construct
 * Bridging (Opus r2 N2): `scomp_congr_seed` (the composition depends on `ρ` on the seeds
   only).
 * Helpers: `SeedOK.weaken`, `word_eq_map`, `exists_perm_filterMap`, `pend_nil`,
-  `unreadSeq_getElem_lt_iff`, `ρP2P_seed`, `length_pend`.
+  `getElem_lt_iff_of_pairwise`, `ρP2P_seed`, `length_pend`.
 -/
 
 namespace Must

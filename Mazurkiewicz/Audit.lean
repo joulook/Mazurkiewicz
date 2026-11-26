@@ -18,6 +18,10 @@ import Mazurkiewicz.Induction.MP.SeedCompRet
 import Mazurkiewicz.Induction.MP.Instances
 import Mazurkiewicz.Induction.MP.Terminal
 import Mazurkiewicz.Induction.MP.CheckSound
+import Mazurkiewicz.Induction.MP.PingPongExample
+import Mazurkiewicz.Induction.MP.P2PExample
+import Mazurkiewicz.Induction.MP.P2PAsynExample
+import Mazurkiewicz.Induction.MP.CheckInstance
 import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx
 import Mazurkiewicz.Condpor.StackEx
@@ -700,6 +704,56 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Must.Ind.checkP2P_sound
 #print axioms Must.Ind.checkP2PAsyn_kinductive
 #print axioms Must.Ind.checkP2PAsyn_sound
+
+-- Induction C9a-C10c (message passing examples: `Induction/MP/Machines`, `PingPongDefs`,
+-- `PingPongExample`, `P2PDefs`, `P2PExample`, `P2PAsynExample`)
+#print axioms Must.Ind.Mach.prog
+#print axioms Must.Graph.Wf.valOK_ret
+#print axioms Must.Ind.exec_at
+#print axioms Must.Ind.badErr_iff
+#print axioms Must.Ind.badErr_ext
+#print axioms Must.Ind.coe_msort
+#print axioms Must.Ind.envAlpha_hconf
+#print axioms Must.Ind.envF_hf
+#print axioms Must.Ind.p2pAlpha_hconf
+#print axioms Must.Ind.p2pF_hf
+#print axioms Must.Ind.pp_tagged
+#print axioms Must.Ind.pp_hconf
+#print axioms Must.Ind.pp_hdet
+#print axioms Must.Ind.pp_hf
+#print axioms Must.Ind.pp_check5
+#print axioms Must.Ind.pp_check1
+#print axioms Must.Ind.pp_kind5
+#print axioms Must.Ind.pp_kind1
+#print axioms Must.Ind.pp_safe
+#print axioms Must.Ind.pqProg_tagged
+#print axioms Must.Ind.pqProg_badErr
+#print axioms Must.Ind.pq_hconf
+#print axioms Must.Ind.pq_hdet
+#print axioms Must.Ind.pq_hf
+#print axioms Must.Ind.pq_check6
+#print axioms Must.Ind.pq_kind6
+#print axioms Must.Ind.pq_safe
+#print axioms Must.Ind.pqa_check6
+#print axioms Must.Ind.pqa_hex
+#print axioms Must.Ind.pqa_fails
+#print axioms Must.Ind.pqa_counts
+#print axioms Must.Ind.pqa_count
+#print axioms Must.Ind.pqa_unsafe
+#print axioms Must.Ind.pqa_not_safe
+#print axioms Must.Ind.pqa_hconf
+#print axioms Must.Ind.pqa_hdet
+#print axioms Must.Ind.pqa_hf
+#print axioms Must.Ind.pqa_rejects_all_fuel
+#print axioms Must.Ind.pqa_not_kinductive
+
+-- Final round C9-C10 (follow-ups: `Induction/MP/Terminal`, `CheckInstance`)
+#print axioms Must.Ind.SAbs.idle_untrunc
+#print axioms Must.Ind.CheckInst.ci_hconf
+#print axioms Must.Ind.CheckInst.ci_hf
+#print axioms Must.Ind.CheckInst.ci_check
+#print axioms Must.Ind.CheckInst.ci_kind
+#print axioms Must.Ind.CheckInst.ci_safe
 
 -- Read-modify-write accesses (`Condpor/Rmw`), milestone R1
 #print axioms Condpor.Model.atomic

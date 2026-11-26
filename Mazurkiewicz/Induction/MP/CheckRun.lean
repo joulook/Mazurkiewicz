@@ -27,7 +27,8 @@ The enumerator of the terminal executions of a budget program is the port's repa
   `checkS_once` (cor:enum (3), last clause: every fragment of length `K` of a realised value of
   `B` is tested exactly once; needs `B.Nodup`).
 * Smoke test: a two-thread `p2p` program with one message; `CheckS` evaluates by `decide +kernel`
-  to `(true, 2)`.
+  to `(true, 2)`. It is an evaluation test only, not an instance of an end theorem; a proved
+  instance of `checkP2P_sound` is in `MP/CheckInstance.lean`.
 -/
 
 namespace Must
@@ -315,7 +316,10 @@ theorem checkS_once {consB : Graph Q → Bool} {T : Sel Q} {fuel : ℕ} {S : MPS
   rw [List.map_congr_left hper]
   exact sum_ite_of_unique hB hb _ (fun _ _ => Iff.rfl) 1
 
-/-! ### A smoke test -/
+/-! ### A smoke test
+
+An evaluation test of `CheckS` only (no hypothesis of an end theorem is proved for it); a
+proved instance of `checkP2P_sound` is in `MP/CheckInstance.lean`. -/
 
 /-- Thread `0` sends `5` to thread `1`, which receives it (blocking, any value). -/
 def smokeStep : Tid → List (Option Val) → Option (Lab VPred)
