@@ -14,14 +14,16 @@ thm:p2p (2), (3), for the one construction over a setting `S` and an abstraction
   (the environment thread `ν` of Section 6), where `κ` is `0` (a budget vanishes outside
   `S.P.threads`): the bound is `(W b ν).length`, exactly the seeds that `ν` sends, so `ν` is not
   restricted (`frag_cnt_idle`). The paper's def:terminal leaves `ν` untruncated (Opus review of
-  C2-C3b); both give the same executions.
+  C2-C3b); both give the same executions: on an idle thread the budget program steps as `Q_b`
+  for every budget (`idle_untrunc`).
 * `budgetProg_bounded`; prop:mp-cover (1) `cover_exists`, (2) `cover_frag` (needs
   `Abs.Realised b`), (3) `cover_unique` (also concluding `IsBudget` for the canonical budget);
   thm:mp-terminal `fragOK_iff_term`.
 * Helpers (generic): `card_eq_sum_cnt`, `sum_map_sub`, `cnt_le_of_isPrefixOf`,
   `cnt_eq_zero_of_not_mem`, `cnt_le_of_bounded`, `exists_term_ext` (a consistent execution of a
   bounded program extends to a terminal one); for a setting: `frag_len_eq`
-  (`‖H‖ = Σ_{t ∈ P} (cnt t - |W t|)`), `res_step_of_lt`.
+  (`‖H‖ = Σ_{t ∈ P} (cnt t - |W t|)`), `res_step_of_lt`, `idle_not_mem`; for budget programs:
+  `exec_budgetProg_iff`, `idle_untrunc`.
 -/
 
 namespace Must
@@ -162,6 +164,26 @@ theorem budgetProg_bounded {b : A} {K : ℕ} {κ : Tid → ℕ}
 theorem exec_budgetProg_iff {b : A} {κ : Tid → ℕ} {H : Graph Q} (hH : H.Wf) :
     (Abs.budgetProg b κ).Exec H ↔ (Abs.res b).Exec H ∧ ∀ t, H.cnt t ≤ (Abs.W b t).length + κ t :=
   exec_trunc_iff hH
+
+/-- On an idle thread the budget program steps as `Q_b`, for every budget: the truncation at
+`(W b t).length + κ t = (W b t).length` cuts nothing, since `Q_b` has no action there after
+the seeds (Opus review of C6-C7). -/
+theorem idle_untrunc {b : A} {K : ℕ} {κ : Tid → ℕ} (hκ : Trust.IsBudget S.P.threads K κ)
+    {t : Tid} (ht : t ∈ S.ι) (x : List (Option Val)) :
+    (Abs.budgetProg b κ).step t x = (Abs.res b).step t x := by
+  have hP := idle_not_mem S ht
+  have hk : κ t = 0 := hκ.1 t hP
+  change (if t ∈ (Abs.res b).threads ∧ x.length < (Abs.W b t).length + κ t then
+    (Abs.res b).step t x else none) = (Abs.res b).step t x
+  rw [hk, Nat.add_zero]
+  have hm : t ∈ (Abs.res b).threads := List.mem_append_right _ ht
+  split_ifs with hc
+  · rfl
+  · have hx : (Abs.W b t).length ≤ x.length := by
+      by_contra h
+      exact hc ⟨hm, by omega⟩
+    change _ = (if t ∈ S.P.threads then _ else if t ∈ S.ι then _ else none)
+    rw [ite_eq_right hP, ite_eq_left ht, prefixStep_of_le hx]
 
 /-- prop:mp-cover (1): a fragment of length at most `K` is a prefix of a terminal execution of
 a budget program of size `K`. (The premise `hb` of the plan is not needed.) -/

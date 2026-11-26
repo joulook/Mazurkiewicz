@@ -32,7 +32,8 @@ variable {Q : Type} [DecidableEq Q] [Membership Val Q]
 namespace Graph
 
 /-- Every clause of well-formedness (`Graph.Wf`) except `rf_bot` (only non-blocking receives
-read `⊥`, def:asyn (i)): the graphs of def:graph. -/
+read `⊥`, def:asyn (i)). This is stronger than the graphs of def:graph: it also keeps
+`rf_once` (a send is read at most once) and `porf_irrefl`. -/
 structure WfExceptBot (G : Graph Q) : Prop where
   /-- an event is determined by its thread and index -/
   idx_inj : ∀ e ∈ G.events, ∀ e' ∈ G.events, e.tid = e'.tid → e.idx = e'.idx → e = e'
@@ -206,7 +207,7 @@ next label. No consistency. -/
 def FullRaw (P : Program Q) (G : Graph Q) : Prop := P.Exec G ∧ ∀ t, P.step t (G.trace t) = none
 
 /-- The event `r_t` of lem:terminal (2): the next event of `t`. -/
-noncomputable def botEv (P : Program Q) (G : Graph Q) (t : Tid) : Ev Q :=
+def botEv (P : Program Q) (G : Graph Q) (t : Tid) : Ev Q :=
   ⟨t, G.cnt t, (P.step t (G.trace t)).getD .block⟩
 
 /-- The events `r_t` of the stuck threads of the program. -/

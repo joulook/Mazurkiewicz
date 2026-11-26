@@ -56,6 +56,13 @@ import Mazurkiewicz.Induction.MP.KInd
 import Mazurkiewicz.Induction.MP.Terminal
 import Mazurkiewicz.Induction.MP.CheckRun
 import Mazurkiewicz.Induction.MP.CheckSound
+import Mazurkiewicz.Induction.MP.CheckInstance
+import Mazurkiewicz.Induction.MP.Machines
+import Mazurkiewicz.Induction.MP.PingPongDefs
+import Mazurkiewicz.Induction.MP.PingPongExample
+import Mazurkiewicz.Induction.MP.P2PDefs
+import Mazurkiewicz.Induction.MP.P2PExample
+import Mazurkiewicz.Induction.MP.P2PAsynExample
 import Mazurkiewicz.Audit
 import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx
