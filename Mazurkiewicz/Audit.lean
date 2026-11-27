@@ -31,6 +31,7 @@ import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
 import Mazurkiewicz.Jmt.Stage
 import Mazurkiewicz.Jmt.Structure
+import Mazurkiewicz.Jmt.Lazy
 
 /-!
 # Axiom audit
@@ -700,3 +701,7 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Jmt.valid'_iff_valid
 #print axioms Jmt.Justifies.stage_valid
 #print axioms Jmt.Step.of_sameStepData
+
+-- Unjustified reads of the stages of a justification (`Jmt/Lazy`)
+#print axioms Jmt.Justifies.unj_eq
+#print axioms Jmt.Justifies.unj_subset
