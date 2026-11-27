@@ -705,3 +705,10 @@ import Mazurkiewicz.Jmt.Lazy
 -- Unjustified reads of the stages of a justification (`Jmt/Lazy`)
 #print axioms Jmt.Justifies.unj_eq
 #print axioms Jmt.Justifies.unj_subset
+
+-- Lazy states: commit set after a lazy step; lazy form of validity (`Jmt/Lazy`)
+#print axioms Jmt.LStep.K_eq
+#print axioms Jmt.LReach.reach
+#print axioms Jmt.LReach.valid
+#print axioms Jmt.Justifies.lreach
+#print axioms Jmt.lazy
