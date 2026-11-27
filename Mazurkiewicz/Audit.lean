@@ -13,6 +13,15 @@ import Mazurkiewicz.Trust.A22
 import Mazurkiewicz.Trust.Oracle
 import Mazurkiewicz.Induction.AssertExample
 import Mazurkiewicz.Induction.ToggleExample
+import Mazurkiewicz.Induction.MP.StepsModel
+import Mazurkiewicz.Induction.MP.SeedCompRet
+import Mazurkiewicz.Induction.MP.Instances
+import Mazurkiewicz.Induction.MP.Terminal
+import Mazurkiewicz.Induction.MP.CheckSound
+import Mazurkiewicz.Induction.MP.PingPongExample
+import Mazurkiewicz.Induction.MP.P2PExample
+import Mazurkiewicz.Induction.MP.P2PAsynExample
+import Mazurkiewicz.Induction.MP.CheckInstance
 import Mazurkiewicz.Condpor.Chain
 import Mazurkiewicz.Condpor.GetNextEx
 import Mazurkiewicz.Condpor.StackEx
@@ -26,6 +35,52 @@ import Mazurkiewicz.Condpor.Rmw.Instances
 import Mazurkiewicz.Condpor.Rmw.LocksEx
 import Mazurkiewicz.Condpor.Rmw.LocksEx3
 import Mazurkiewicz.Condpor.Rmw.LocksEx4
+import Mazurkiewicz.Condpor.Rmw.Lifecycle
+import Mazurkiewicz.Condpor.Rmw.LifecycleLemmas
+import Mazurkiewicz.Condpor.Rmw.LifecycleEx
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck1
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck2
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck3
+import Mazurkiewicz.Condpor.Rmw.LifecycleCheck6
+import Mazurkiewicz.Condpor.Rmw.LifecycleClass
+import Mazurkiewicz.Condpor.Rmw.LifecycleLock
+import Mazurkiewicz.Condpor.Rmw.LifecycleSem
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemLemmas
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck
+import Mazurkiewicz.Condpor.Rmw.LifecycleSemCheck2
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateGB
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateRun
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate1
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateTrace
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateEmit
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateSim
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateStep
+import Mazurkiewicz.Condpor.Rmw.LifecycleGatePres
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateFinal
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateAtom
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateLast
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateCls
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateClass
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Lin
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Adj
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Run
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Tr
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Replay
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Next
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Step
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Emit
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Fin
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate2Final
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Trace
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Comm
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Bwd
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Ord
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Next
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3Fwd
+import Mazurkiewicz.Condpor.Rmw.LifecycleGate3
+import Mazurkiewicz.Condpor.Rmw.LifecycleGateAll
 import Mazurkiewicz.Condpor.Rmw.LockMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
@@ -534,6 +589,173 @@ import Mazurkiewicz.Jmt.Lazy
 #print axioms Condpor.rfx_printed
 #print axioms Condpor.rfx_printed_classes
 
+-- Induction C0-C1b (message passing: `Induction/MP/Defs`, `Steps`, `StepsModel`)
+#print axioms Must.Ind.decM_encM
+#print axioms Must.Ind.sendsTagged_of_exec
+#print axioms Must.Graph.Wf.sendCodeAt_eq
+#print axioms Must.Graph.Wf.sendCodeAt_zero
+#print axioms Must.Graph.Wf.unreadEvAt_eq
+#print axioms Must.Graph.Wf.pend_eq
+#print axioms Must.Ind.nodup_env
+#print axioms Must.Ind.nodup_nil
+#print axioms Must.Ind.pstep_iff
+#print axioms Must.Ind.mreach_iff
+#print axioms Must.Ind.stepsN_iff
+#print axioms Must.Ind.prefix_steps
+#print axioms Must.Ind.term_iff_sem
+#print axioms Must.Ind.term_iff_stuck
+#print axioms Must.Ind.asyn_step
+#print axioms Must.Ind.p2p_step
+#print axioms Must.Ind.p2p_cons_iff_paper
+#print axioms Must.Ind.botExt_graph
+#print axioms Must.Ind.botExt_full
+#print axioms Must.Ind.botExt_restrict
+#print axioms Must.Ind.botExt_incons
+
+-- Induction C2-C3b (message passing: `Induction/MP/Programs`, `SeedComp`, `SeedCompRet`)
+#print axioms Must.Ind.prefixStep_env
+#print axioms Must.Ind.trunc_bounded
+#print axioms Must.Ind.exec_trunc_iff
+#print axioms Must.Ind.exec_of_isPrefixOf
+#print axioms Must.Ind.seedRes_congr
+#print axioms Must.Ind.sendsGraph_cons
+#print axioms Must.Ind.frag_seed
+#print axioms Must.Ind.seed_isPrefixOf
+#print axioms Must.Ind.frag_cnt_idle
+#print axioms Must.Ind.frag_seedEv
+#print axioms Must.Ind.scomp_seed
+#print axioms Must.Ind.scomp_add
+#print axioms Must.Ind.scomp_cnt
+#print axioms Must.Ind.scomp_injective
+#print axioms Must.Ind.scomp_ret_old
+#print axioms Must.Ind.scomp_ret_emb
+#print axioms Must.Ind.scomp_trace
+#print axioms Must.Ind.ehat_lab
+#print axioms Must.Ind.ehat_bij
+#print axioms Must.Ind.ehat_tid
+#print axioms Must.Ind.ehat_idx
+#print axioms Must.Ind.ehat_soDst
+#print axioms Must.Ind.ehat_soPaper
+
+-- Induction C4a-C5 (message passing: `Induction/MP/StepsMore`, `CompFrag`, `Commute`, `Instances`)
+#print axioms Must.Ind.preach_iff
+#print axioms Must.Ind.us_scomp
+#print axioms Must.Ind.frag_scomp
+#print axioms Must.Ind.pendM_scomp
+#print axioms Must.Ind.pend_scomp
+#print axioms Must.Ind.scomp_mono
+#print axioms Must.Ind.frag_scomp_injective
+#print axioms Must.Ind.step_scomp
+#print axioms Must.Ind.scomp_step
+#print axioms Must.Ind.stepsN_iff_frag
+#print axioms Must.Ind.envRes_eq
+#print axioms Must.Ind.p2pRes_eq
+#print axioms Must.Ind.seedOK_env
+#print axioms Must.Ind.pendEnum_of_pendM
+#print axioms Must.Ind.seedOK_p2p
+#print axioms Must.Ind.scomp_congr_seed
+#print axioms Must.Ind.seedOK_p2p_unique
+#print axioms Must.Ind.scomp_eq_compP2P
+#print axioms Must.Ind.seedOK_env_enum
+#print axioms Must.Ind.mp_compose_1
+#print axioms Must.Ind.mp_compose_2
+#print axioms Must.Ind.mp_compose_3
+#print axioms Must.Ind.mp_compose_4
+#print axioms Must.Ind.mp_compose_steps_1
+#print axioms Must.Ind.mp_compose_steps_2
+#print axioms Must.Ind.mp_compose_steps_3
+#print axioms Must.Ind.p2p_compose_1
+#print axioms Must.Ind.p2p_compose_2
+#print axioms Must.Ind.p2p_compose_3
+#print axioms Must.Ind.p2p_compose_4
+#print axioms Must.Ind.p2p_compose_steps_1
+#print axioms Must.Ind.p2p_compose_steps_2
+#print axioms Must.Ind.p2p_compose_steps_3
+
+-- Induction C6-C7 (message passing: `Induction/MP/KInd`, `Terminal`)
+#print axioms Must.Ind.SAbs.ksound
+#print axioms Must.Ind.SAbs.stepOK_iff_fragOK
+#print axioms Must.Ind.SAbs.kinductive_iff_representatives
+#print axioms Must.Ind.compositionalEnv_imp
+#print axioms Must.Ind.h_compositional_env
+#print axioms Must.Ind.h_compositional_p2p
+#print axioms Must.Ind.exists_term_ext
+#print axioms Must.Ind.frag_len_eq
+#print axioms Must.Ind.SAbs.budgetProg_bounded
+#print axioms Must.Ind.SAbs.cover_exists
+#print axioms Must.Ind.SAbs.cover_frag
+#print axioms Must.Ind.SAbs.cover_unique
+#print axioms Must.Ind.SAbs.fragOK_iff_term
+
+-- Induction C8a-C8b (message passing: `Induction/MP/CheckRun`, `CheckSound`)
+#print axioms Must.Ind.runTerm_spec
+#print axioms Must.Ind.runTerm_fuel
+#print axioms Must.Ind.checkS_fst
+#print axioms Must.Ind.checkS_snd
+#print axioms Must.Ind.checkS_fuel
+#print axioms Must.Ind.checkS_count
+#print axioms Must.Ind.checkS_once
+#print axioms Must.Ind.checkS_kinductive
+#print axioms Must.Ind.checkS_sound
+#print axioms Must.Ind.checkS_sound_explicit
+#print axioms Must.Ind.checkS_accepts
+#print axioms Must.Ind.checkAsyn_kinductive
+#print axioms Must.Ind.checkAsyn_sound
+#print axioms Must.Ind.checkP2P_kinductive
+#print axioms Must.Ind.checkP2P_sound
+#print axioms Must.Ind.checkP2PAsyn_kinductive
+#print axioms Must.Ind.checkP2PAsyn_sound
+
+-- Induction C9a-C10c (message passing examples: `Induction/MP/Machines`, `PingPongDefs`,
+-- `PingPongExample`, `P2PDefs`, `P2PExample`, `P2PAsynExample`)
+#print axioms Must.Ind.Mach.prog
+#print axioms Must.Graph.Wf.valOK_ret
+#print axioms Must.Ind.exec_at
+#print axioms Must.Ind.badErr_iff
+#print axioms Must.Ind.badErr_ext
+#print axioms Must.Ind.coe_msort
+#print axioms Must.Ind.envAlpha_hconf
+#print axioms Must.Ind.envF_hf
+#print axioms Must.Ind.p2pAlpha_hconf
+#print axioms Must.Ind.p2pF_hf
+#print axioms Must.Ind.pp_tagged
+#print axioms Must.Ind.pp_hconf
+#print axioms Must.Ind.pp_hdet
+#print axioms Must.Ind.pp_hf
+#print axioms Must.Ind.pp_check5
+#print axioms Must.Ind.pp_check1
+#print axioms Must.Ind.pp_kind5
+#print axioms Must.Ind.pp_kind1
+#print axioms Must.Ind.pp_safe
+#print axioms Must.Ind.pqProg_tagged
+#print axioms Must.Ind.pqProg_badErr
+#print axioms Must.Ind.pq_hconf
+#print axioms Must.Ind.pq_hdet
+#print axioms Must.Ind.pq_hf
+#print axioms Must.Ind.pq_check6
+#print axioms Must.Ind.pq_kind6
+#print axioms Must.Ind.pq_safe
+#print axioms Must.Ind.pqa_check6
+#print axioms Must.Ind.pqa_hex
+#print axioms Must.Ind.pqa_fails
+#print axioms Must.Ind.pqa_counts
+#print axioms Must.Ind.pqa_count
+#print axioms Must.Ind.pqa_unsafe
+#print axioms Must.Ind.pqa_not_safe
+#print axioms Must.Ind.pqa_hconf
+#print axioms Must.Ind.pqa_hdet
+#print axioms Must.Ind.pqa_hf
+#print axioms Must.Ind.pqa_rejects_all_fuel
+#print axioms Must.Ind.pqa_not_kinductive
+
+-- Final round C9-C10 (follow-ups: `Induction/MP/Terminal`, `CheckInstance`)
+#print axioms Must.Ind.SAbs.idle_untrunc
+#print axioms Must.Ind.CheckInst.ci_hconf
+#print axioms Must.Ind.CheckInst.ci_hf
+#print axioms Must.Ind.CheckInst.ci_check
+#print axioms Must.Ind.CheckInst.ci_kind
+#print axioms Must.Ind.CheckInst.ci_safe
+
 -- Read-modify-write accesses (`Condpor/Rmw`), milestone R1
 #print axioms Condpor.Model.atomic
 #print axioms Condpor.Rmw.sound
@@ -664,6 +886,108 @@ import Mazurkiewicz.Jmt.Lazy
 #print axioms Condpor.lockQ6
 #print axioms Condpor.lockS1
 
+-- Thread lifecycle (`Condpor/Rmw/Lifecycle`, `LifecycleLemmas`, `LifecycleEx`,
+-- `LifecycleCheck*`), milestone LC1
+#print axioms Condpor.Life.lifeSys_explore
+#print axioms Condpor.Life.lifeSys_complete
+#print axioms Condpor.Life.lifeSys_eq_of_abs_eq
+#print axioms Condpor.Life.lifeSys_blocked_of_fruitless
+#print axioms Condpor.Life.maxStarts_eq_count
+#print axioms Condpor.Life.lifeSys_noCut
+#print axioms Condpor.Life.lifeClass_ne_cut
+#print axioms Condpor.Life.lifeTarget_head
+#print axioms Condpor.Life.frag_of_fragB
+#print axioms Condpor.Life.lc_lemma1_nonroot
+#print axioms Condpor.Life.lc_lemma1_root
+#print axioms Condpor.Life.lc_lemma2
+#print axioms Condpor.Life.lc_lemma3
+#print axioms Condpor.Life.lc_lemma4
+#print axioms Condpor.Life.lc_lemma5
+#print axioms Condpor.Life.lc_lemma6
+#print axioms Condpor.Life.lc_lemma7
+#print axioms Condpor.Life.lc_lemma8
+#print axioms Condpor.Life.lc_lemma8_block
+#print axioms Condpor.Life.start_unique
+#print axioms Condpor.Life.finish_unique
+#print axioms Condpor.Life.st_write_val
+#print axioms Condpor.Life.final_join_target
+#print axioms Condpor.Life.rejected
+#print axioms Condpor.Life.startJoin_target
+#print axioms Condpor.Life.joinCycle_target
+#print axioms Condpor.Life.cutErr_target
+#print axioms Condpor.Life.twoJoin_target
+#print axioms Condpor.Life.lowChild_target
+#print axioms Condpor.Life.dl2_target
+#print axioms Condpor.Life.tryjoin2_target
+-- LC1 round 2
+#print axioms Condpor.Life.fragB_eq
+#print axioms Condpor.Life.rjTwoStarters_rule
+#print axioms Condpor.Life.rjTwoStarts_rule
+#print axioms Condpor.Life.rjSelfStart_rule
+#print axioms Condpor.Life.outsideAsmSt_class
+#print axioms Condpor.Life.outsideLockAsm_class
+#print axioms Condpor.Life.lc_lemma7_src
+#print axioms Condpor.Life.final_join_target_full
+#print axioms Condpor.Life.lifeClass_ne_odd
+#print axioms Condpor.Life.lifeClass_not_exploration_iff
+#print axioms Condpor.Life.lc_lemma8_terminal
+#print axioms Condpor.Life.lifeSys_lockLike
+#print axioms Condpor.Life.lifeSys_mutex
+#print axioms Condpor.Life.lock_value_iff
+#print axioms Condpor.Life.j7b_target
+-- LC2-a: the machine of §5 (`LifecycleSem`, `LifecycleSemLemmas`, `LifecycleSemCheck*`)
+#print axioms Condpor.Life.lifeClass_ne_cut_of_full
+#print axioms Condpor.Life.Sem.enabled_iff_next
+#print axioms Condpor.Life.Sem.step_iff
+#print axioms Condpor.Life.Sem.step_det
+#print axioms Condpor.Life.Sem.enabled_tid_unique
+#print axioms Condpor.Life.Sem.Steps.lockInv
+#print axioms Condpor.Life.Sem.holdsM_unique
+#print axioms Condpor.Life.Sem.count_eq_zero_iff
+#print axioms Condpor.Life.Sem.commute
+#print axioms Condpor.Life.Sem.mem_machRuns_iff
+#print axioms Condpor.Life.Sem.cmp_spec
+#print axioms Condpor.Life.Sem.joinCycle_cmp
+#print axioms Condpor.Life.Sem.queryTry_cmp
+#print axioms Condpor.Life.Sem.machSideM_small
+#print axioms Condpor.Life.Sem.chain2_cmpM
+-- LC2-b (`LifecycleGate`, `LifecycleGateGB`, `LifecycleGateRun`, `LifecycleGate1`, `LifecycleGateTrace`)
+#print axioms Condpor.Life.Sem.abs_eq_of_ser_eq
+#print axioms Condpor.Life.Sem.mem_runsM
+#print axioms Condpor.Life.Sem.cmpM_spec
+#print axioms Condpor.Life.Sem.GB.Ok.wf
+#print axioms Condpor.Life.Sem.GB.Ok.sc
+#print axioms Condpor.Life.Sem.MInv.steps
+#print axioms Condpor.Life.Sem.runCfg_wf_sc
+#print axioms Condpor.Life.Sem.gate1_of_parts
+#print axioms Condpor.Life.Sem.exec_of_execT
+#print axioms Condpor.Life.Sem.full_of_tr
+#print axioms Condpor.Life.Sem.ExecT.push
+#print axioms Condpor.Life.Sem.g1Exec_full_of_sim
+#print axioms Condpor.Life.Sem.SInv.step
+#print axioms Condpor.Life.Sem.finalize_spec
+#print axioms Condpor.Life.Sem.g1Sim
+#print axioms Condpor.Life.Sem.g1Exec
+#print axioms Condpor.Life.Sem.g1Full
+#print axioms Condpor.Life.Sem.g1Atomic
+#print axioms Condpor.Life.Sem.g1Class
+#print axioms Condpor.Life.Sem.gate1
+#print axioms Condpor.Life.Sem.gate2_of_parts
+#print axioms Condpor.Life.Sem.g2Lin
+#print axioms Condpor.Life.Sem.g2Adj
+#print axioms Condpor.Life.Sem.exists_runList
+#print axioms Condpor.Life.Sem.abs_eq_of_subLin
+#print axioms Condpor.Life.Sem.g2Replay_of_parts
+#print axioms Condpor.Life.Sem.g2Steps_of_step
+#print axioms Condpor.Life.Sem.Ctx.enabled
+#print axioms Condpor.Life.Sem.Ctx.emit
+#print axioms Condpor.Life.Sem.g2Step
+#print axioms Condpor.Life.Sem.g2Steps
+#print axioms Condpor.Life.Sem.FCtx.thread
+#print axioms Condpor.Life.Sem.g2Final
+#print axioms Condpor.Life.Sem.g2Replay
+#print axioms Condpor.Life.Sem.gate2
+
 -- Monitors (`Condpor/Rmw/Monitors`, `MonitorCode`, `MonitorMutex`)
 #print axioms Condpor.monSys_explore
 #print axioms Condpor.monSys_complete
@@ -701,6 +1025,27 @@ import Mazurkiewicz.Jmt.Lazy
 #print axioms Jmt.valid'_iff_valid
 #print axioms Jmt.Justifies.stage_valid
 #print axioms Jmt.Step.of_sameStepData
+
+-- LC2-c: gate clause 3 (`LifecycleGate3*`) and the gate with its corollaries (`LifecycleGateAll`)
+#print axioms Condpor.Life.Sem.mequiv_cons_split
+#print axioms Condpor.Life.Sem.emit_comm
+#print axioms Condpor.Life.Sem.run_move
+#print axioms Condpor.Life.Sem.gate3_bwd
+#print axioms Condpor.Life.Sem.order_conflict
+#print axioms Condpor.Life.Sem.next_same
+#print axioms Condpor.Life.Sem.key
+#print axioms Condpor.Life.Sem.fwd_core
+#print axioms Condpor.Life.Sem.gate3_fwd
+#print axioms Condpor.Life.Sem.gate3
+#print axioms Condpor.Life.Sem.gate
+#print axioms Condpor.Life.Sem.graphs_eq
+#print axioms Condpor.Life.Sem.graphs_set_eq
+#print axioms Condpor.Life.Sem.graphs_mequiv
+#print axioms Condpor.Life.Sem.lifeClass_congr
+#print axioms Condpor.Life.Sem.cfg_iff
+#print axioms Condpor.Life.Sem.exploration_not_run
+#print axioms Condpor.Life.Sem.explorer_termValid
+#print axioms Condpor.Life.Sem.hyp_graph_explored
 
 -- Unjustified reads of the stages of a justification (`Jmt/Lazy`)
 #print axioms Jmt.Justifies.unj_eq
