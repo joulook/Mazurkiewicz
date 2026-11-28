@@ -86,6 +86,7 @@ import Mazurkiewicz.Condpor.Rmw.MonitorMutex
 import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
 import Mazurkiewicz.Jmt.Stage
 import Mazurkiewicz.Jmt.Structure
+import Mazurkiewicz.Jmt.Lazy
 
 /-!
 # Axiom audit
@@ -1045,3 +1046,14 @@ import Mazurkiewicz.Jmt.Structure
 #print axioms Condpor.Life.Sem.exploration_not_run
 #print axioms Condpor.Life.Sem.explorer_termValid
 #print axioms Condpor.Life.Sem.hyp_graph_explored
+
+-- Unjustified reads of the stages of a justification (`Jmt/Lazy`)
+#print axioms Jmt.Justifies.unj_eq
+#print axioms Jmt.Justifies.unj_subset
+
+-- Lazy states: commit set after a lazy step; lazy form of validity (`Jmt/Lazy`)
+#print axioms Jmt.LStep.K_eq
+#print axioms Jmt.LReach.reach
+#print axioms Jmt.LReach.valid
+#print axioms Jmt.Justifies.lreach
+#print axioms Jmt.lazy
