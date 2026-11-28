@@ -25,6 +25,13 @@ of `l'` (`lparent_isParent`, `lparent_least`).
 Termination needs finitely many unjustified reads; as in `Jmt.lazy`, this
 comes from `KExec.Regular` executions.
 
+A lazy state of the paper is a class of `LState`s under `LEquiv` (same
+execution and frozen edges, same obligations of the unjustified reads); each
+class has exactly one normal member (`IsNormal`, `LState.norm`,
+`existsUnique_normal`). The exploration over normal states (`NVisit`, with the
+normalized parent `normParent`, `nlparent`) visits exactly one member of each
+class of reachable states.
+
 Main statements:
 
 * `Jmt.IsParent.lreach_iff`: a lazy state that is not initial is reachable iff
@@ -37,6 +44,16 @@ Main statements:
   reachable state is visited along exactly one path from an initial state.
 * `Jmt.IsParent.valid_iff_visit`: the executions of the visited states are the
   valid executions.
+* `Jmt.IsParent.lreach_iff_existsUnique_nvisit`,
+  `Jmt.IsParent.valid_iff_nvisit`: the same claims for lazy states of the
+  paper, over normal representatives.
+* `Jmt.lreach_iff_step_normal`, `Jmt.lreach_unique`: reachability is the unique
+  solution of a recursion on the number of unjustified reads, so it needs no
+  store of visited states.
+* `Jmt.candTripleSet_finite`, `Jmt.normal_cand_finite`: with finitely many
+  executions and frozen edges, a state has finitely many candidates up to
+  equivalence; then a strict total order suffices for the least candidate
+  (`Jmt.lparentLin_isParent`).
 -/
 
 namespace Jmt
@@ -555,5 +572,501 @@ theorem IsParent.valid_iff_visit (hp : IsParent Ex init parent)
   simp only [hp.visit_iff hreg]
 
 end Visit
+
+/-! ## Normal lazy states
+
+A lazy state of the paper has an obligation map defined on the unjustified
+reads only. Lean lazy states that agree on the execution, the frozen edges and
+the obligations of the unjustified reads (`LEquiv`) represent the same lazy
+state of the paper. The *normal* representative maps every other key to
+`init`. -/
+
+open Classical in
+/-- The normal representative of a lazy state: the obligations outside the
+unjustified reads are replaced by `init`. -/
+noncomputable def LState.norm (init : Key) (l : LState Key Val) : LState Key Val :=
+  ⟨l.E, fun r => if r ∈ l.E.unj then l.θ r else init, l.Z⟩
+
+/-- `l` is normal: its obligation map is `init` outside the unjustified
+reads. -/
+def IsNormal (init : Key) (l : LState Key Val) : Prop :=
+  ∀ r, r ∉ l.E.unj → l.θ r = init
+
+/-- `l₁` and `l₂` represent the same lazy state of the paper: same execution,
+same frozen edges, and the same obligations of the unjustified reads. -/
+def LEquiv (l₁ l₂ : LState Key Val) : Prop :=
+  l₁.E = l₂.E ∧ l₁.Z = l₂.Z ∧ Set.EqOn l₁.θ l₂.θ l₁.E.unj
+
+section Normal
+
+variable {l l₁ l₂ m₁ m₂ : LState Key Val} {B : Set Key}
+
+theorem LEquiv.refl (l : LState Key Val) : LEquiv l l :=
+  ⟨rfl, rfl, fun _ _ => rfl⟩
+
+theorem LEquiv.symm (h : LEquiv l₁ l₂) : LEquiv l₂ l₁ :=
+  ⟨h.1.symm, h.2.1.symm, fun r hr => (h.2.2 (by rw [h.1]; exact hr)).symm⟩
+
+theorem LEquiv.trans (h : LEquiv l₁ l₂) (h' : LEquiv l₂ m₁) : LEquiv l₁ m₁ :=
+  ⟨h.1.trans h'.1, h.2.1.trans h'.2.1,
+    fun r hr => (h.2.2 hr).trans (h'.2.2 (by rw [← h.1]; exact hr))⟩
+
+/-- An equivalent state is the first one with another obligation map. -/
+theorem LEquiv.eq (h : LEquiv l₁ l₂) : l₂ = ⟨l₁.E, l₂.θ, l₁.Z⟩ := by
+  obtain ⟨E, θ, Z⟩ := l₂
+  obtain ⟨hE, hZ, -⟩ := h
+  dsimp only at hE hZ ⊢
+  rw [hE, hZ]
+
+theorem LEquiv.isLazy (h : LEquiv l₁ l₂) (hl : IsLazy Ex init l₁) : IsLazy Ex init l₂ := by
+  rw [h.eq]
+  exact hl.congr h.2.2
+
+theorem LEquiv.isLInit (h : LEquiv l₁ l₂) (hl : IsLInit Ex init l₁) : IsLInit Ex init l₂ := by
+  rw [h.eq]
+  exact hl.congr h.2.2
+
+theorem LEquiv.lreach (h : LEquiv l₁ l₂) (hl : LReach Ex init l₁) : LReach Ex init l₂ := by
+  rw [h.eq]
+  exact hl.congr h.2.2
+
+/-- Lazy steps between equivalent states. -/
+theorem LStep.equiv (hs : LStep Ex init l₁ l₂ B) (h₁ : LEquiv l₁ m₁) (h₂ : LEquiv l₂ m₂) :
+    LStep Ex init m₁ m₂ B := by
+  rw [h₁.eq, h₂.eq]
+  exact (hs.congr_src h₁.2.2).congr_tgt h₂.2.2
+
+theorem LState.norm_E : (l.norm init).E = l.E := rfl
+
+theorem LState.norm_Z : (l.norm init).Z = l.Z := rfl
+
+theorem LState.eqOn_norm : Set.EqOn l.θ (l.norm init).θ l.E.unj := fun r hr => by
+  simp [LState.norm, hr]
+
+theorem LState.isNormal_norm : IsNormal init (l.norm init) := by
+  intro r hr
+  change r ∉ l.E.unj at hr
+  simp [LState.norm, hr]
+
+theorem LState.equiv_norm : LEquiv l (l.norm init) :=
+  ⟨rfl, rfl, LState.eqOn_norm⟩
+
+/-- Every state is equivalent to exactly one normal state, its
+normalization. -/
+theorem existsUnique_normal (l : LState Key Val) :
+    ∃! n, IsNormal init n ∧ LEquiv l n := by
+  refine ⟨l.norm init, ⟨LState.isNormal_norm, LState.equiv_norm⟩, ?_⟩
+  rintro n ⟨hn, he⟩
+  rw [he.eq]
+  simp only [LState.norm, LState.mk.injEq, true_and, and_true]
+  funext r
+  by_cases hr : r ∈ l.E.unj
+  · simp only [hr, ↓reduceIte]
+    exact (he.2.2 hr).symm
+  · simp only [hr, ↓reduceIte]
+    exact hn r (by rw [← he.1]; exact hr)
+
+/-- A normal state is its own normalization. -/
+theorem IsNormal.norm_eq (hn : IsNormal init l) : l.norm init = l :=
+  ((existsUnique_normal (init := init) l).unique ⟨LState.isNormal_norm, LState.equiv_norm⟩
+    ⟨hn, LEquiv.refl l⟩)
+
+/-- Normalization preserves being a lazy state, in both directions. -/
+theorem isLazy_norm_iff : IsLazy Ex init (l.norm init) ↔ IsLazy Ex init l :=
+  ⟨LState.equiv_norm.symm.isLazy, LState.equiv_norm.isLazy⟩
+
+/-- Normalization preserves being initial, in both directions. -/
+theorem isLInit_norm_iff : IsLInit Ex init (l.norm init) ↔ IsLInit Ex init l :=
+  ⟨LState.equiv_norm.symm.isLInit, LState.equiv_norm.isLInit⟩
+
+/-- Normalization preserves reachability, in both directions. -/
+theorem lreach_norm_iff : LReach Ex init (l.norm init) ↔ LReach Ex init l :=
+  ⟨LState.equiv_norm.symm.lreach, LState.equiv_norm.lreach⟩
+
+/-- Normalization commutes with lazy steps. -/
+theorem lstep_norm_iff : LStep Ex init (l₁.norm init) (l₂.norm init) B ↔ LStep Ex init l₁ l₂ B :=
+  ⟨fun h => h.equiv LState.equiv_norm.symm LState.equiv_norm.symm,
+    fun h => h.equiv LState.equiv_norm LState.equiv_norm⟩
+
+/-- Two candidates of `l'` with the same execution and frozen edges are
+equivalent. -/
+theorem IsCand.equiv_of_eq {l' : LState Key Val} {B₁ B₂ : Set Key}
+    (h₁ : IsCand Ex init l' l₁ B₁) (h₂ : IsCand Ex init l' l₂ B₂) (hE : l₁.E = l₂.E)
+    (hZ : l₁.Z = l₂.Z) : LEquiv l₁ l₂ :=
+  ⟨hE, hZ, fun r hr => (h₁.obl_eq hr).trans (h₂.obl_eq (by rw [← hE]; exact hr)).symm⟩
+
+end Normal
+
+/-! ## Exploring the normal states -/
+
+/-- The normalized parent: the value of `parent`, normalized. -/
+noncomputable def normParent (init : Key) (parent : LState Key Val → Option (LState Key Val))
+    (l' : LState Key Val) : Option (LState Key Val) :=
+  (parent l').map (LState.norm init)
+
+/-- The parent of the paper on normal states: `lparent` with its value
+normalized, so that the obligation map of the parent is that of `l'`
+restricted to the unjustified reads of the parent. -/
+noncomputable def nlparent (Ex : Set (KExec Key Val)) (init : Key)
+    (r : Set Key × KExec Key Val × Set (Key × Key) →
+      Set Key × KExec Key Val × Set (Key × Key) → Prop)
+    [IsWellOrder _ r] : LState Key Val → Option (LState Key Val) :=
+  normParent init (lparent Ex init r)
+
+/-- The lazy states visited by the exploration over normal states: it starts
+from every normal initial lazy state and continues from a visited `p` with
+every normal `l` such that `p ⇝ l` and `parent l = p`. -/
+inductive NVisit (Ex : Set (KExec Key Val)) (init : Key)
+    (parent : LState Key Val → Option (LState Key Val)) : LState Key Val → Prop
+  | init {l : LState Key Val} : IsLInit Ex init l → IsNormal init l → NVisit Ex init parent l
+  | step {p l : LState Key Val} {B : Set Key} : NVisit Ex init parent p →
+      LStep Ex init p l B → IsNormal init l → parent l = some p → NVisit Ex init parent l
+
+/-- `NVisitPath parent l ps`: the exploration over normal states visits `l`
+along the path `ps`, listed from `l` back to a normal initial lazy state. -/
+inductive NVisitPath (Ex : Set (KExec Key Val)) (init : Key)
+    (parent : LState Key Val → Option (LState Key Val)) :
+    LState Key Val → List (LState Key Val) → Prop
+  | init {l : LState Key Val} : IsLInit Ex init l → IsNormal init l →
+      NVisitPath Ex init parent l [l]
+  | step {p l : LState Key Val} {B : Set Key} {ps : List (LState Key Val)} :
+      NVisitPath Ex init parent p ps → LStep Ex init p l B → IsNormal init l →
+      parent l = some p → NVisitPath Ex init parent l (l :: ps)
+
+section NVisit
+
+variable {parent : LState Key Val → Option (LState Key Val)}
+
+/-- The normalized parent of a parent function is a parent function. -/
+theorem IsParent.normParent (hp : IsParent Ex init parent) :
+    IsParent Ex init (normParent init parent) where
+  cand := by
+    intro l' l h
+    unfold Jmt.normParent at h
+    obtain ⟨q, hq, rfl⟩ := Option.map_eq_some_iff.1 h
+    obtain ⟨B, hs, hr⟩ := hp.cand hq
+    exact ⟨B, hs.congr_src LState.eqOn_norm, hr.congr LState.eqOn_norm⟩
+  defined := by
+    intro l' l B hc
+    unfold Jmt.normParent
+    rw [Option.isSome_map]
+    exact hp.defined hc
+
+/-- The values of the normalized parent are normal. -/
+theorem normParent_normal {l l' : LState Key Val} (h : normParent init parent l' = some l) :
+    IsNormal init l := by
+  unfold normParent at h
+  obtain ⟨q, -, rfl⟩ := Option.map_eq_some_iff.1 h
+  exact LState.isNormal_norm
+
+/-- `nlparent` is a parent function with normal values. -/
+theorem nlparent_isParent {r : Set Key × KExec Key Val × Set (Key × Key) →
+    Set Key × KExec Key Val × Set (Key × Key) → Prop} [IsWellOrder _ r] :
+    IsParent Ex init (nlparent Ex init r) ∧
+      ∀ {l l'}, nlparent Ex init r l' = some l → IsNormal init l :=
+  ⟨lparent_isParent.normParent, normParent_normal⟩
+
+theorem NVisit.lreach {l : LState Key Val} (h : NVisit Ex init parent l) :
+    LReach Ex init l := by
+  induction h with
+  | init h _ => exact ⟨_, h, Relation.ReflTransGen.refl⟩
+  | step _ hs _ _ ih =>
+    obtain ⟨l₀, h₀, hst⟩ := ih
+    exact ⟨l₀, h₀, hst.tail ⟨_, hs⟩⟩
+
+theorem NVisit.isNormal {l : LState Key Val} (h : NVisit Ex init parent l) :
+    IsNormal init l := by
+  cases h with
+  | init _ hn => exact hn
+  | step _ _ hn _ => exact hn
+
+/-- A state is visited over normal states iff it is visited along a path. -/
+theorem nvisit_iff_exists_nvisitPath {l : LState Key Val} :
+    NVisit Ex init parent l ↔ ∃ ps, NVisitPath Ex init parent l ps := by
+  constructor
+  · intro h
+    induction h with
+    | init h hn => exact ⟨_, NVisitPath.init h hn⟩
+    | step _ hs hn hpl ih =>
+      obtain ⟨ps, hps⟩ := ih
+      exact ⟨_, NVisitPath.step hps hs hn hpl⟩
+  · rintro ⟨ps, h⟩
+    induction h with
+    | init h hn => exact NVisit.init h hn
+    | step _ hs hn hpl ih => exact NVisit.step ih hs hn hpl
+
+/-- A state is visited over normal states along at most one path. -/
+theorem NVisitPath.unique {l : LState Key Val} {ps qs : List (LState Key Val)}
+    (h : NVisitPath Ex init parent l ps) (h' : NVisitPath Ex init parent l qs) : ps = qs := by
+  induction h generalizing qs with
+  | init hi _ =>
+    cases h' with
+    | init _ _ => rfl
+    | step _ hs _ _ => exact absurd hi hs.not_isLInit
+  | step _ hs _ hpl ih =>
+    cases h' with
+    | init hi _ => exact absurd hi hs.not_isLInit
+    | step hq _ _ hql =>
+      rw [hpl] at hql
+      obtain rfl := Option.some.inj hql
+      rw [ih hq]
+
+/-- The states visited over normal states are the reachable normal states.
+Besides `hreg` (as in `IsCand.ncard_lt`), `hn` says that the values of
+`parent` are normal (true of `normParent`, `normParent_normal`). -/
+theorem IsParent.nvisit_iff (hp : IsParent Ex init parent)
+    (hn : ∀ {l l' : LState Key Val}, parent l' = some l → IsNormal init l)
+    (hreg : ∀ E ∈ Ex, E.Regular) (l : LState Key Val) :
+    NVisit Ex init parent l ↔ LReach Ex init l ∧ IsNormal init l := by
+  refine ⟨fun h => ⟨h.lreach, h.isNormal⟩, ?_⟩
+  suffices H : ∀ N, ∀ l : LState Key Val, l.E.unj.ncard = N → LReach Ex init l →
+      IsNormal init l → NVisit Ex init parent l from fun ⟨h1, h2⟩ => H _ l rfl h1 h2
+  intro N
+  induction N using Nat.strong_induction_on with
+  | _ N ih =>
+  intro l hN hl hnl
+  by_cases hi : IsLInit Ex init l
+  · exact NVisit.init hi hnl
+  · obtain ⟨p, hpl⟩ := Option.isSome_iff_exists.1 ((hp.lreach_iff hi).1 hl)
+    obtain ⟨B, hB⟩ := hp.cand hpl
+    exact NVisit.step (ih _ (hN ▸ hB.ncard_lt hreg) p rfl hB.2 (hn hpl)) hB.1 hnl hpl
+
+/-- **Exploration of lazy states**, "visits every reachable lazy state exactly
+once", in the terms of the paper: a lazy state is reachable iff exactly one
+state equivalent to it is visited by the exploration over normal states, and
+that state is visited along exactly one path. Hypotheses as in
+`IsParent.nvisit_iff`. -/
+theorem IsParent.lreach_iff_existsUnique_nvisit (hp : IsParent Ex init parent)
+    (hn : ∀ {l l' : LState Key Val}, parent l' = some l → IsNormal init l)
+    (hreg : ∀ E ∈ Ex, E.Regular) (l : LState Key Val) :
+    LReach Ex init l ↔ ∃! n, LEquiv l n ∧ NVisit Ex init parent n ∧
+      ∃! ps, NVisitPath Ex init parent n ps := by
+  constructor
+  · intro hl
+    have hv : NVisit Ex init parent (l.norm init) :=
+      (hp.nvisit_iff hn hreg _).2 ⟨lreach_norm_iff.2 hl, LState.isNormal_norm⟩
+    obtain ⟨ps, hps⟩ := nvisit_iff_exists_nvisitPath.1 hv
+    refine ⟨l.norm init, ⟨LState.equiv_norm, hv, ps, hps, fun qs h => h.unique hps⟩, ?_⟩
+    rintro m ⟨he, hm, -⟩
+    exact (existsUnique_normal (init := init) l).unique ⟨hm.isNormal, he⟩
+      ⟨LState.isNormal_norm, LState.equiv_norm⟩
+  · rintro ⟨n, ⟨he, hv, -⟩, -⟩
+    exact he.symm.lreach hv.lreach
+
+/-- **Exploration of lazy states**, last claim, over normal states: the
+executions of the visited normal states are the valid executions. The
+hypotheses are those of `Jmt.lazy` and `IsParent.nvisit_iff`. -/
+theorem IsParent.valid_iff_nvisit (hp : IsParent Ex init parent)
+    (hn : ∀ {l l' : LState Key Val}, parent l' = some l → IsNormal init l)
+    (hinit : ∀ E ∈ Ex, E.rf init = none) (hreg : ∀ E ∈ Ex, E.Regular)
+    (hkind : ∀ E ∈ Ex, ∀ E' ∈ Ex, ∀ r ∈ E'.A, (E.rf r).isSome → (E'.rf r).isSome)
+    (T : KExec Key Val) :
+    Valid Ex init T ↔ ∃ (θ : Key → Key) (Z : Set (Key × Key)),
+      NVisit Ex init parent ⟨T, θ, Z⟩ := by
+  rw [lazy hinit hreg hkind T]
+  constructor
+  · rintro ⟨θ, Z, hl⟩
+    exact ⟨_, Z, (hp.nvisit_iff hn hreg _).2
+      ⟨lreach_norm_iff.2 hl, LState.isNormal_norm (l := ⟨T, θ, Z⟩)⟩⟩
+  · rintro ⟨θ, Z, hv⟩
+    exact ⟨θ, Z, hv.lreach⟩
+
+end NVisit
+
+/-! ## Reachability as a well-founded recursion -/
+
+section Recursion
+
+/-- The source of a lazy step has fewer unjustified reads, counted (`hreg`
+as in `IsCand.ncard_lt`). -/
+theorem LStep.ncard_lt (hreg : ∀ E ∈ Ex, E.Regular) {l l' : LState Key Val} {B : Set Key}
+    (h : LStep Ex init l l' B) : l.E.unj.ncard < l'.E.unj.ncard :=
+  Set.ncard_lt_ncard h.unj_ssubset ((hreg _ h.tgt.stage.ex).finite.subset h.tgt.unj_subset)
+
+/-- **Unfolding of reachability**: a lazy state is reachable iff it is
+initial or the target of a lazy step from a reachable state, whose
+unjustified reads are a proper subset (`LStep.unj_ssubset`). -/
+theorem lreach_iff_step (l : LState Key Val) :
+    LReach Ex init l ↔ IsLInit Ex init l ∨ ∃ p B, LStep Ex init p l B ∧ LReach Ex init p := by
+  by_cases hi : IsLInit Ex init l
+  · exact ⟨fun _ => Or.inl hi, fun _ => ⟨l, hi, Relation.ReflTransGen.refl⟩⟩
+  · rw [lreach_iff_exists_isCand hi]
+    constructor
+    · rintro ⟨p, B, hs, hr⟩
+      exact Or.inr ⟨p, B, hs, hr⟩
+    · rintro (h | ⟨p, B, hs, hr⟩)
+      · exact absurd h hi
+      · exact ⟨p, B, hs, hr⟩
+
+/-- The unfolding with normal sources only. -/
+theorem lreach_iff_step_normal (l : LState Key Val) :
+    LReach Ex init l ↔ IsLInit Ex init l ∨
+      ∃ p B, IsNormal init p ∧ LStep Ex init p l B ∧ LReach Ex init p := by
+  rw [lreach_iff_step]
+  refine or_congr Iff.rfl ⟨?_, ?_⟩
+  · rintro ⟨p, B, hs, hr⟩
+    exact ⟨p.norm init, B, LState.isNormal_norm,
+      hs.equiv LState.equiv_norm (LEquiv.refl l), lreach_norm_iff.2 hr⟩
+  · rintro ⟨p, B, -, hs, hr⟩
+    exact ⟨p, B, hs, hr⟩
+
+/-- **Reachability is decided by the recursion** over the candidates: every
+predicate `P` that satisfies the recursive equation of
+`lreach_iff_step_normal` is `LReach`. The recursion is well-founded because
+the number of unjustified reads decreases (`hreg` as in `IsCand.ncard_lt`). -/
+theorem lreach_unique (hreg : ∀ E ∈ Ex, E.Regular) (P : LState Key Val → Prop)
+    (hP : ∀ l, P l ↔ IsLInit Ex init l ∨
+      ∃ p B, IsNormal init p ∧ LStep Ex init p l B ∧ P p) (l : LState Key Val) :
+    P l ↔ LReach Ex init l := by
+  suffices H : ∀ N, ∀ l : LState Key Val, l.E.unj.ncard = N → (P l ↔ LReach Ex init l) from
+    H _ l rfl
+  intro N
+  induction N using Nat.strong_induction_on with
+  | _ N ih =>
+  intro l hN
+  rw [hP l, lreach_iff_step_normal l]
+  refine or_congr Iff.rfl ⟨?_, ?_⟩
+  · rintro ⟨p, B, hn, hs, hp⟩
+    exact ⟨p, B, hn, hs, (ih _ (hN ▸ hs.ncard_lt hreg) p rfl).1 hp⟩
+  · rintro ⟨p, B, hn, hs, hp⟩
+    exact ⟨p, B, hn, hs, (ih _ (hN ▸ hs.ncard_lt hreg) p rfl).2 hp⟩
+
+/-- The same without restricting the sources to normal states. -/
+theorem lreach_unique' (hreg : ∀ E ∈ Ex, E.Regular) (P : LState Key Val → Prop)
+    (hP : ∀ l, P l ↔ IsLInit Ex init l ∨ ∃ p B, LStep Ex init p l B ∧ P p)
+    (l : LState Key Val) : P l ↔ LReach Ex init l := by
+  suffices H : ∀ N, ∀ l : LState Key Val, l.E.unj.ncard = N → (P l ↔ LReach Ex init l) from
+    H _ l rfl
+  intro N
+  induction N using Nat.strong_induction_on with
+  | _ N ih =>
+  intro l hN
+  rw [hP l, lreach_iff_step l]
+  refine or_congr Iff.rfl ⟨?_, ?_⟩
+  · rintro ⟨p, B, hs, hp⟩
+    exact ⟨p, B, hs, (ih _ (hN ▸ hs.ncard_lt hreg) p rfl).1 hp⟩
+  · rintro ⟨p, B, hs, hp⟩
+    exact ⟨p, B, hs, (ih _ (hN ▸ hs.ncard_lt hreg) p rfl).2 hp⟩
+
+end Recursion
+
+/-! ## Finitely many candidates -/
+
+/-- The triples `(B, E, Z)` of the candidates of `l'`. -/
+def candTripleSet (Ex : Set (KExec Key Val)) (init : Key) (l' : LState Key Val) :
+    Set (Set Key × KExec Key Val × Set (Key × Key)) :=
+  {t | ∃ l, IsCand Ex init l' l t.1 ∧ l.E = t.2.1 ∧ l.Z = t.2.2}
+
+section Finite
+
+variable {l' : LState Key Val}
+
+/-- **Finitely many candidate triples.** The hypotheses: the program has
+finitely many executions (`hEx`); its executions are `Regular` (`hreg`), so
+`unj(l'.E)` is finite and there are finitely many batches; and `l'` has
+finitely many frozen edges (`hZ`), so there are finitely many `Z ⊆ l'.Z`.
+`hZ` is not a consequence of the others: frozen edges are synchronizes-with
+edges, on which `KExec` imposes no finiteness. -/
+theorem candTripleSet_finite (hreg : ∀ E ∈ Ex, E.Regular) (hEx : Ex.Finite)
+    (hZ : l'.Z.Finite) : (candTripleSet Ex init l').Finite := by
+  by_cases hl : IsLazy Ex init l'
+  · have hu : l'.E.unj.Finite := (hreg _ hl.stage.ex).finite.subset hl.unj_subset
+    refine (hu.powerset.prod (hEx.prod hZ.powerset)).subset ?_
+    rintro ⟨B, E, Z⟩ ⟨l, hc, hE, hZ'⟩
+    dsimp only at hE hZ' hc
+    subst hE hZ'
+    exact ⟨hc.batch_subset.2, hc.1.src.stage.ex, hc.Z_subset⟩
+  · refine Set.finite_empty.subset ?_
+    rintro _ ⟨l, hc, -⟩
+    exact absurd hc.1.tgt hl
+
+/-- The candidate triples with the obligations of `l'` (`candTriples`) are
+candidate triples. -/
+theorem candTriples_subset : candTriples Ex init l' ⊆ candTripleSet Ex init l' :=
+  fun _ ht => ⟨_, ht, rfl, rfl⟩
+
+/-- **Finitely many normal candidates**, under the hypotheses of
+`candTripleSet_finite`: up to equivalence, a state has finitely many
+candidates. -/
+theorem normal_cand_finite (hreg : ∀ E ∈ Ex, E.Regular) (hEx : Ex.Finite)
+    (hZ : l'.Z.Finite) :
+    {l : LState Key Val | IsNormal init l ∧ ∃ B, IsCand Ex init l' l B}.Finite := by
+  refine ((candTripleSet_finite (init := init) hreg hEx hZ).image
+    (fun t => (⟨t.2.1, l'.θ, t.2.2⟩ : LState Key Val).norm init)).subset ?_
+  rintro l ⟨hn, B, hc⟩
+  refine ⟨(B, l.E, l.Z), ⟨l, hc, rfl, rfl⟩, ?_⟩
+  have he : LEquiv l ((⟨l.E, l'.θ, l.Z⟩ : LState Key Val).norm init) :=
+    LEquiv.trans (l₂ := ⟨l.E, l'.θ, l.Z⟩) ⟨rfl, rfl, hc.obl_eq⟩ LState.equiv_norm
+  exact (existsUnique_normal (init := init) l).unique ⟨LState.isNormal_norm, he⟩
+    ⟨hn, LEquiv.refl l⟩
+
+end Finite
+
+/-! ## The least candidate for a strict total order -/
+
+open Classical in
+/-- The parent for a strict total order `r` on the triples (not necessarily a
+well-order): a candidate whose triple has no candidate triple below it, that
+is, the least one; undefined if there is none. With finitely many candidate
+triples (`candTripleSet_finite`) the least triple exists whenever there is a
+candidate (`lparentLin_isParent`). -/
+noncomputable def lparentLin (Ex : Set (KExec Key Val)) (init : Key)
+    (r : Set Key × KExec Key Val × Set (Key × Key) →
+      Set Key × KExec Key Val × Set (Key × Key) → Prop)
+    [IsStrictTotalOrder _ r] (l' : LState Key Val) : Option (LState Key Val) :=
+  if h : ∃ t ∈ candTriples Ex init l', ∀ x ∈ candTriples Ex init l', ¬ r x t then
+    some ⟨h.choose.2.1, l'.θ, h.choose.2.2⟩
+  else none
+
+section LParentLin
+
+variable {r : Set Key × KExec Key Val × Set (Key × Key) →
+    Set Key × KExec Key Val × Set (Key × Key) → Prop} [IsStrictTotalOrder _ r]
+
+/-- `lparentLin` is a parent function, if the program has finitely many
+executions (`hEx`), they are `Regular` (`hreg`), and reachable lazy states
+have finitely many frozen edges (`hZ`); see `candTripleSet_finite`. -/
+theorem lparentLin_isParent (hreg : ∀ E ∈ Ex, E.Regular) (hEx : Ex.Finite)
+    (hZ : ∀ l : LState Key Val, LReach Ex init l → l.Z.Finite) :
+    IsParent Ex init (lparentLin Ex init r) where
+  cand := by
+    intro l' l h
+    unfold lparentLin at h
+    split_ifs at h with hne
+    obtain rfl := Option.some.inj h
+    exact ⟨_, hne.choose_spec.1⟩
+  defined := by
+    intro l' l B hc
+    have hne : (candTriples Ex init l').Nonempty := ⟨(B, l.E, l.Z), hc.congr⟩
+    have hr : LReach Ex init l' := (lreach_iff_exists_isCand hc.1.not_isLInit).2 ⟨l, B, hc⟩
+    have hfin : (candTriples Ex init l').Finite :=
+      (candTripleSet_finite hreg hEx (hZ l' hr)).subset candTriples_subset
+    have hwf := Set.wellFoundedOn_iff.1 (hfin.wellFoundedOn (r := r))
+    obtain ⟨t, ht, hmin⟩ := hwf.has_min _ hne
+    have hex : ∃ t ∈ candTriples Ex init l', ∀ x ∈ candTriples Ex init l', ¬ r x t :=
+      ⟨t, ht, fun x hx hxt => hmin x hx ⟨hxt, hx, ht⟩⟩
+    unfold lparentLin
+    split_ifs
+    rfl
+
+/-- `lparentLin` is the candidate with the least triple: its obligations are
+those of `l'`, it is a candidate with batch `unj(l'.E) \ unj(p.E)`, and no
+candidate of `l'` has a triple below its triple. -/
+theorem lparentLin_least {l' p l : LState Key Val} {B : Set Key}
+    (hp : lparentLin Ex init r l' = some p) (hc : IsCand Ex init l' l B) :
+    p.θ = l'.θ ∧ IsCand Ex init l' p (l'.E.unj \ p.E.unj) ∧
+      ¬ r (B, l.E, l.Z) (l'.E.unj \ p.E.unj, p.E, p.Z) := by
+  unfold lparentLin at hp
+  split_ifs at hp with hne
+  obtain rfl := Option.some.inj hp
+  have hmem := hne.choose_spec.1
+  have hB : hne.choose.1 = l'.E.unj \ hne.choose.2.1.unj := hmem.batch_eq
+  refine ⟨rfl, ?_, ?_⟩
+  · rw [← hB]
+    exact hmem
+  · rw [← hB]
+    exact hne.choose_spec.2 _ hc.congr
+
+end LParentLin
 
 end Jmt

@@ -1125,3 +1125,12 @@ import Mazurkiewicz.Pct.Free
 #print axioms Jmt.VisitPath.unique
 #print axioms Jmt.IsParent.lreach_iff_existsUnique
 #print axioms Jmt.IsParent.valid_iff_visit
+#print axioms Jmt.existsUnique_normal
+#print axioms Jmt.nlparent_isParent
+#print axioms Jmt.NVisitPath.unique
+#print axioms Jmt.IsParent.lreach_iff_existsUnique_nvisit
+#print axioms Jmt.IsParent.valid_iff_nvisit
+#print axioms Jmt.lreach_iff_step
+#print axioms Jmt.lreach_unique
+#print axioms Jmt.candTripleSet_finite
+#print axioms Jmt.lparentLin_isParent
