@@ -23,8 +23,6 @@ How the text is read here.
 
 namespace Pct
 
-open Classical
-
 variable {X : Type} [PartialOrder X] {d : ℕ}
 
 /-- A schedule of a poset: a strict total order that extends the order. -/
@@ -100,10 +98,12 @@ theorem hits_of_stronglyHits_tail (α : LinExt X) (a : Fin (d + 1) → X)
 
 section Exists
 
+open scoped Classical in
 /-- The number of the block of `y`: the number of `i` with `y ∉ U_i`. -/
 noncomputable def blockOf (x : Fin d → X) (y : X) : ℕ :=
   (Finset.univ.filter (fun i : Fin d => y ∉ belowSet x i)).card
 
+open scoped Classical in
 theorem blockOf_mono (x : Fin d → X) {y y' : X} (h : y ≤ y') :
     blockOf x y ≤ blockOf x y' := by
   apply Finset.card_le_card
@@ -113,6 +113,7 @@ theorem blockOf_mono (x : Fin d → X) {y y' : X} (h : y ≤ y') :
   obtain ⟨j, hij, hj⟩ := hi
   exact ⟨j, hij, hj.trans h⟩
 
+open scoped Classical in
 theorem blockOf_lt (x : Fin d → X) {i : Fin d} {y : X} (hy : y ∈ belowSet x i) :
     blockOf x y < blockOf x (x i) := by
   have h1 : blockOf x y ≤ i.val := by
@@ -223,8 +224,8 @@ theorem sat_of_stronglyHits {D : PDir X d} {α₀ α : LinExt X} (h₀ : Sat α�
 
 /-- prop:sh-eq, first paragraph of the proof: `α` strongly hits `x` iff every
 member of `U_i` other than `x_i` is before `x_i`. The directive that lists
-the targets in the order of a strongly hitting schedule is not formalised
-here. -/
+the targets in the order of a strongly hitting schedule is
+`exists_pguar_of_stronglyGuar` in `Static.lean`. -/
 theorem stronglyHits_iff_sets (α : LinExt X) (x : Fin d → X) :
     StronglyHits α x ↔ ∀ i, ∀ c ∈ belowSet x i, c ≠ x i → α.lt c (x i) := by
   rw [stronglyHits_iff]

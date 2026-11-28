@@ -95,6 +95,27 @@ them.
 | Coverage as a count | `card_good`, `card_params` | `Pct/Count.lean` |
 | A strongly hitting schedule exists | `exists_stronglyHits` | `Pct/Hitting.lean` |
 | Strong `d`-hitting gives `(d+1)`-hitting | `hits_of_stronglyHits_tail` | `Pct/Hitting.lean` |
+| Condition 1 from one complete schedule (static programs) | `cond1_of_complete` | `Pct/Static.lean` |
+| A p-guaranteeing directive gives a strongly guaranteeing tuple | `stronglyGuar_of_pguar` | `Pct/Static.lean` |
+| A guaranteeing tuple gives a p-guaranteeing directive | `pguar_chainDir` | `Pct/Static.lean` |
+| A strongly guaranteeing tuple gives a p-guaranteeing directive | `exists_pguar_of_stronglyGuar` | `Pct/Static.lean` |
+| The position labelling is a strict labelling | `posLab_strict`, `cntLab_strict` | `Pct/Position.lean` |
+| Violation of a position directive, by order | `Labelling.IsPos.pviolates_iff_viol` | `Pct/Position.lean` |
+| The schedules of a program are a local schedule set | `Program.sched_local` | `Pct/Program.lean` |
+| The schedules of `P⁺`, by the schedules of `P` | `Program.mem_sched_plus_iff` | `Pct/Program.lean` |
+| Static bounded programs have thread lengths | `Program.Static.hasLen_plus` | `Pct/Program.lean` |
+| The order word of a schedule is a partial schedule of the positions | `psched_ordP`, `Program.Static.psched_ord` | `Pct/Program.lean` |
+| Every partial schedule of the positions is an order word | `Program.Static.exists_sched_ord_eq` | `Pct/Program.lean` |
+| Linear extensions of the positions and complete schedules | `Program.Static.exists_complete_ord_eq`, `Program.Static.complete_iff` | `Pct/Program.lean` |
+| p-guarantee on schedules and on the poset of positions | `Program.Static.pguarantees_iff_pguar` | `Pct/Program.lean` |
+| A p-guaranteeing directive gives a strongly guaranteeing tuple, on schedules | `Program.Static.stronglyGuar_of_pguarantees` | `Pct/Program.lean` |
+| A guaranteeing tuple gives a p-guaranteeing directive, on schedules | `Program.Static.pguarantees_chainDir` | `Pct/Program.lean` |
+| A strongly guaranteeing tuple gives a p-guaranteeing directive, on schedules | `Program.Static.exists_pguarantees_of_stronglyGuar` | `Pct/Program.lean` |
+| Complete schedules of `P⁺`, by the complete schedules of `P` | `Program.complete_plus_iff` | `Pct/Program.lean` |
+| A free step creates no p-violation | `Directive.PGuarantees.not_pviolates_freeStep` | `Pct/Free.lean` |
+| A complete schedule with free steps only is in the bug | `Directive.PGuarantees.mem_of_free_complete` | `Pct/Free.lean` |
+| A free step exists; a complete schedule with free steps only exists (bounded programs) | `Directive.exists_freeStep`, `Directive.PGuarantees.exists_free_complete_mem` | `Pct/Free.lean` |
+| Depth 1: the schedules that run the thread of the target last are in the bug | `Prog.HasLen.mem_of_thr_last_one` | `Pct/Free.lean` |
 
 `coverage`: for every initial priority order that puts the thread of the
 first target last there are `d - 1` distinct change points within the length
