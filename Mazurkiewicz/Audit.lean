@@ -87,6 +87,10 @@ import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
 import Mazurkiewicz.Jmt.Stage
 import Mazurkiewicz.Jmt.Structure
 import Mazurkiewicz.Jmt.Lazy
+import Mazurkiewicz.Pct.Static
+import Mazurkiewicz.Pct.Position
+import Mazurkiewicz.Pct.Program
+import Mazurkiewicz.Pct.Free
 
 /-!
 # Axiom audit
@@ -1057,3 +1061,57 @@ import Mazurkiewicz.Jmt.Lazy
 #print axioms Jmt.LReach.valid
 #print axioms Jmt.Justifies.lreach
 #print axioms Jmt.lazy
+
+-- Schedules of a finite poset; static-program theorem on posets (`Pct/Static`)
+#print axioms Pct.cond1_of_complete
+#print axioms Pct.exists_complete_of_cond1
+#print axioms Pct.stronglyGuar_of_pguar
+#print axioms Pct.stronglyGuar_of_pguar_linExt
+#print axioms Pct.pguar_chainDir
+#print axioms Pct.exists_pguar_of_stronglyGuar
+#print axioms Pct.exists_sched_of_linExt
+#print axioms Pct.exists_ofSched_eq
+#print axioms Pct.viol_complete_iff
+#print axioms Pct.viol_cons
+
+-- Position labelling, order word, lem:viol-order (`Pct/Position`)
+#print axioms Pct.posLab_strict
+#print axioms Pct.cntLab_strict
+#print axioms Pct.Labelling.IsPos.mem_names_iff
+#print axioms Pct.Labelling.IsPos.mem_names_iff_mem_ord
+#print axioms Pct.names_posLab_eq_cntLab
+#print axioms Pct.Labelling.IsPos.pviolates_iff_viol
+#print axioms Pct.pviolates_posLab_iff
+
+-- Program model, start transformation, static programs (`Pct/Program`)
+#print axioms Pct.Program.sched_local
+#print axioms Pct.Program.mem_sched_plus_iff
+#print axioms Pct.Program.run_plus
+#print axioms Pct.Program.complete_plus_iff
+#print axioms Pct.psched_ordP
+#print axioms Pct.Prog.HasLen.exists_ordP_eq
+#print axioms Pct.Prog.HasLen.complete_iff_ordP
+#print axioms Pct.Prog.HasLen.exists_complete_ordP_eq
+#print axioms Pct.Program.Static.plus
+#print axioms Pct.Program.Static.hasLen_plus
+#print axioms Pct.Program.Static.psched_ord
+#print axioms Pct.Program.Static.exists_sched_ord_eq
+#print axioms Pct.Program.Static.complete_ord
+#print axioms Pct.Program.Static.exists_complete_ord_eq
+#print axioms Pct.Program.Static.complete_iff
+#print axioms Pct.Program.Static.pguarantees_iff_pguar
+#print axioms Pct.Program.Static.stronglyGuar_of_pguarantees
+#print axioms Pct.Program.Static.pguarantees_chainDir
+#print axioms Pct.Program.Static.exists_pguarantees_of_stronglyGuar
+#print axioms Pct.Program.posNext_sched
+#print axioms Pct.Prog.HasLen.pviolates_iff_viol
+#print axioms Pct.Prog.HasLen.pguarantees_iff_pguar
+
+-- Free steps of a p-guaranteeing directive (`Pct/Free`)
+#print axioms Pct.Directive.PGuarantees.not_pviolates_freeStep
+#print axioms Pct.Directive.PGuarantees.mem_of_free_complete
+#print axioms Pct.Directive.exists_freeStep
+#print axioms Pct.Directive.Free.exists_complete
+#print axioms Pct.Directive.PGuarantees.exists_free_complete_mem
+#print axioms Pct.Prog.HasLen.mem_of_thr_last
+#print axioms Pct.Prog.HasLen.mem_of_thr_last_one
