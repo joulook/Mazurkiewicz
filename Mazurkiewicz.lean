@@ -187,6 +187,7 @@ import Mazurkiewicz.Must.Search
 import Mazurkiewicz.Jmt.NoSo
 import Mazurkiewicz.Jmt.Structure
 import Mazurkiewicz.Jmt.Lazy
+import Mazurkiewicz.Jmt.LazyExplore
 
 /-!
 # Mazurkiewicz
