@@ -87,6 +87,7 @@ import Mazurkiewicz.Condpor.Rmw.MonitorSpecT
 import Mazurkiewicz.Jmt.Stage
 import Mazurkiewicz.Jmt.Structure
 import Mazurkiewicz.Jmt.Lazy
+import Mazurkiewicz.Jmt.LazyExplore
 import Mazurkiewicz.Pct.Static
 import Mazurkiewicz.Pct.Position
 import Mazurkiewicz.Pct.Program
@@ -1115,3 +1116,21 @@ import Mazurkiewicz.Pct.Free
 #print axioms Pct.Directive.PGuarantees.exists_free_complete_mem
 #print axioms Pct.Prog.HasLen.mem_of_thr_last
 #print axioms Pct.Prog.HasLen.mem_of_thr_last_one
+
+-- Exploration of lazy states by a parent function (`Jmt/LazyExplore`)
+#print axioms Jmt.lparent_isParent
+#print axioms Jmt.IsParent.lreach_iff
+#print axioms Jmt.IsParent.wf
+#print axioms Jmt.IsParent.visit_iff
+#print axioms Jmt.VisitPath.unique
+#print axioms Jmt.IsParent.lreach_iff_existsUnique
+#print axioms Jmt.IsParent.valid_iff_visit
+#print axioms Jmt.existsUnique_normal
+#print axioms Jmt.nlparent_isParent
+#print axioms Jmt.NVisitPath.unique
+#print axioms Jmt.IsParent.lreach_iff_existsUnique_nvisit
+#print axioms Jmt.IsParent.valid_iff_nvisit
+#print axioms Jmt.lreach_iff_step
+#print axioms Jmt.lreach_unique
+#print axioms Jmt.candTripleSet_finite
+#print axioms Jmt.lparentLin_isParent
